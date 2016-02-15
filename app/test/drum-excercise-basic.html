@@ -10,32 +10,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <html>
-
 <head>
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <title>Elements Test Runner</title>
-  <meta charset="UTF-8">
+  <title>drum-excercise</title>
 
-  <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
   <script src="../bower_components/web-component-tester/browser.js"></script>
-</head>
 
+  <!-- Step 1: import the element to test -->
+  <link rel="import" href="../elements/drum-excercise/drum-excercise.html">
+
+</head>
 <body>
 
-  <script>
-    WCT.loadSuites([
-      'my-greeting-basic.html',
-      'my-greeting-basic.html?dom=shadow',
-      'my-list-basic.html',
-      'my-list-basic.html?dom=shadow',
-      'mytest-element-basic.html',
-      'mytest-element-basic.html?dom=shadow',
-      'drum-excercise-basic.html',
-      'drum-excercise-basic.html?dom=shadow'
-    ]);
-  </script>
+<test-fixture id="basic">
+  <template>
+    <drum-excercise></drum-excercise>
+  </template>
+</test-fixture>
 
+<script>
+  suite('drum-excercise tests', function() {
+    var element;
+
+    setup(function() {
+      element = fixture('basic');
+    });
+
+    test('', function() {
+
+    });
+
+  });
+</script>
 
 </body>
-
 </html>

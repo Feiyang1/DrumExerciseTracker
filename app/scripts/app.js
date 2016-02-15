@@ -17,6 +17,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   // Sets app default base URL
   app.baseUrl = '/';
+  app.activeExcercises = [
+  ];
+  app.method = "get";
+  
+  //initialize drum excercies
+  app.dataUrl = "http://localhost:3030/";
+  app.handleResponse = (event)=>{
+      app.activeExcercises = event.detail.response;
+  };
+  
+  window.addEventListener("excerciseCompleted", (event)=>{
+      app.method = "post";
+      app.$.ajaxHandler.generateRequest();
+  });
+  
+  
   if (window.location.port === '') {  // if production
     // Uncomment app.baseURL below and
     // set app.baseURL to '/your-pathname/' if running from folder in production
@@ -34,6 +50,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
     console.log('Our app is ready to rock!');
+    this.$.ajaxHandler.generateRequest();
   });
 
   // See https://github.com/Polymer/polymer/issues/1381
@@ -46,36 +63,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // The appName is moved to top and shrunk on condensing. The bottom sub title
   // is shrunk to nothing on condensing.
   window.addEventListener('paper-header-transform', function(e) {
-    var appName = Polymer.dom(document).querySelector('#mainToolbar .app-name');
-    var middleContainer = Polymer.dom(document).querySelector('#mainToolbar .middle-container');
-    var bottomContainer = Polymer.dom(document).querySelector('#mainToolbar .bottom-container');
-    var detail = e.detail;
-    var heightDiff = detail.height - detail.condensedHeight;
-    var yRatio = Math.min(1, detail.y / heightDiff);
-    // appName max size when condensed. The smaller the number the smaller the condensed size.
-    var maxMiddleScale = 0.50;
-    var auxHeight = heightDiff - detail.y;
-    var auxScale = heightDiff / (1 - maxMiddleScale);
-    var scaleMiddle = Math.max(maxMiddleScale, auxHeight / auxScale + maxMiddleScale);
-    var scaleBottom = 1 - yRatio;
-
-    // Move/translate middleContainer
-    Polymer.Base.transform('translate3d(0,' + yRatio * 100 + '%,0)', middleContainer);
-
-    // Scale bottomContainer and bottom sub title to nothing and back
-    Polymer.Base.transform('scale(' + scaleBottom + ') translateZ(0)', bottomContainer);
-
-    // Scale middleContainer appName
-    Polymer.Base.transform('scale(' + scaleMiddle + ') translateZ(0)', appName);
+//     var appName = Polymer.dom(document).querySelector('#mainToolbar .app-name');
+//     var middleContainer = Polymer.dom(document).querySelector('#mainToolbar .middle-container');
+//     var bottomContainer = Polymer.dom(document).querySelector('#mainToolbar .bottom-container');
+//     var detail = e.detail;
+//     var heightDiff = detail.height - detail.condensedHeight;
+//     var yRatio = Math.min(1, detail.y / heightDiff);
+//     // appName max size when condensed. The smaller the number the smaller the condensed size.
+//     var maxMiddleScale = 0.50;
+//     var auxHeight = heightDiff - detail.y;
+//     var auxScale = heightDiff / (1 - maxMiddleScale);
+//     var scaleMiddle = Math.max(maxMiddleScale, auxHeight / auxScale + maxMiddleScale);
+//     var scaleBottom = 1 - yRatio;
+// 
+//     // Move/translate middleContainer
+//     Polymer.Base.transform('translate3d(0,' + yRatio * 100 + '%,0)', middleContainer);
+// 
+//     // Scale bottomContainer and bottom sub title to nothing and back
+//     Polymer.Base.transform('scale(' + scaleBottom + ') translateZ(0)', bottomContainer);
+// 
+//     // Scale middleContainer appName
+//     Polymer.Base.transform('scale(' + scaleMiddle + ') translateZ(0)', appName);
   });
 
   // Scroll page to top and expand header
   app.scrollPageToTop = function() {
-    app.$.headerPanelMain.scrollToTop(true);
+ //   app.$.headerPanelMain.scrollToTop(true);
   };
 
   app.closeDrawer = function() {
-    app.$.paperDrawerPanel.closeDrawer();
+   // app.$.paperDrawerPanel.closeDrawer();
   };
 
 })(document);
