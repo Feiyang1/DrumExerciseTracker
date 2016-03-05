@@ -83,37 +83,37 @@ app.listen(port, function () {
 
 // web app
 //app.use('/', express.static(path.join(__dirname, '../dist')));
-app.use('/', express.static(__dirname + '/dist'));
+app.use(express.static('dist'));
 // app.get('/', function(req, res){
 //     res.render('index.html');
 // });
 
 // api
-app.route('/api')
-    .get(function (req, res) {// return list of excercises
-    
-        // only care about date
-        let today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        var connection = new Connection(config);
-
-        connection.on('connect', function (err) {
-            //   console.log("connected");
-            executeStatement(connection, function (result) {
-                let response = {
-                    excercises: result,
-                    today: today
-                };
-
-                res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify(response));
-            });
-        })
-    }).post(function (req, res) {//update an excercise
-        let excerciseName = req.body.name;
-        let newData = req.body;
-        fs.writeFile(dataFile, JSON.stringify(newData));
-    }).put(function (req, res) {// add a new excercise
-    
-    });
+// app.route('/api')
+//     .get(function (req, res) {// return list of excercises
+//     
+//         // only care about date
+//         let today = new Date();
+//         today.setHours(0, 0, 0, 0);
+// 
+//         var connection = new Connection(config);
+// 
+//         connection.on('connect', function (err) {
+//             //   console.log("connected");
+//             executeStatement(connection, function (result) {
+//                 let response = {
+//                     excercises: result,
+//                     today: today
+//                 };
+// 
+//                 res.setHeader('Content-Type', 'application/json');
+//                 res.send(JSON.stringify(response));
+//             });
+//         })
+//     }).post(function (req, res) {//update an excercise
+//         let excerciseName = req.body.name;
+//         let newData = req.body;
+//         fs.writeFile(dataFile, JSON.stringify(newData));
+//     }).put(function (req, res) {// add a new excercise
+//     
+//     });
