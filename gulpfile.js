@@ -24,6 +24,7 @@ var historyApiFallback = require('connect-history-api-fallback');
 var packageJson = require('./package.json');
 var crypto = require('crypto');
 var ensureFiles = require('./tasks/ensure-files.js');
+var babel = require("gulp-babel");
 
 // var ghPages = require('gulp-gh-pages');
 
@@ -75,9 +76,9 @@ var optimizeHtmlTask = function (src, dest) {
     return gulp.src(src)
         .pipe(assets)
     // Concatenate and minify JavaScript
-        .pipe($.if('*.js', $.uglify({
-            preserveComments: 'some'
-        })))
+        // .pipe($.if('*.js', $.uglify({
+        //     preserveComments: 'some'
+        // })))
     // Concatenate and minify styles
     // In case you are still using useref build blocks
         .pipe($.if('*.css', $.minifyCss()))
@@ -282,8 +283,18 @@ gulp.task('default', ['clean'], function (cb) {
         ['ensureFiles', 'copy', 'styles'],
         'elements',
         ['images', 'fonts', 'html'],
+       // ['images', 'fonts'],
+        'babel',
         'vulcanize', // 'cache-config',
         cb);
+});
+
+gulp.task('babel', function(){
+   return gulp.src(["app/**/*.js", "!app/bower_components/**"])
+   .pipe(babel({
+       presets: ['es2015']
+   }))
+   .pipe(gulp.dest("dist")); 
 });
 
 // Build then deploy to GitHub pages gh-pages branch

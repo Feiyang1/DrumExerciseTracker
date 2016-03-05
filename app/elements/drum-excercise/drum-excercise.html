@@ -27,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 padding: 16px 0 16px 0;
                 margin: 16px auto;
                 background: white;
-                width: calc(98% - 46px);
+                width: calc(98% - 46px); 
                 margin-bottom: 32px;
                 padding-left: 30px;
                 padding-right: 30px; 
@@ -36,10 +36,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </style>
         <paper-material on-click="completeTask">
             <paper-ripple></paper-ripple>
-            <div>{{excercise.name}}</div>
-            <paper-icon-button icon="editor:mode-edit"></paper-icon-button>
-            <div>BPM: {{excercise.bpm}}</div>
-            <paper-icon-button icon="image:timer"></paper-icon-button>
+            <div>
+                <template is="dom-if" if="{{isEdit}}">
+                    
+                </template>
+                <div>{{excercise.name}}</div>
+                <paper-icon-button icon="editor:mode-edit" on-click="edit"></paper-icon-button>
+            </div>
+            <div>
+                <div>BPM: {{excercise.bpm}}</div>
+                <paper-icon-button icon="image:timer"></paper-icon-button>    
+            </div>
         </paper-material>
     </template>
     <script>
@@ -50,12 +57,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'drum-excercise',
 
       properties: {
-        excercise: Object
+        excercise: Object,
+        isEdit : {
+            
+        }
       },
       
       completeTask : function(){
-          this.set("excercise.bpm", ++this.excercise.bpm);
+      //    this.set("excercise.bpm", ++this.excercise.bpm);
           this.fire("excerciseCompleted", {name: this.excercise.name});
+      },
+      
+      edit : function(){
+          
       }
     });
   })();

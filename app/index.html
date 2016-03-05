@@ -63,8 +63,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <span id="browser-sync-binding"></span>
     <template is="dom-bind" id="app">
 
-        <iron-ajax id="ajaxHandler" url="{{dataUrl}}" method="{{method}}" body="{{activeExcercises}}" content-type="application/json" params='{"alt":"json", "q":"chrome"}' handle-as="json" on-response="handleResponse"
-        debounce-duration="300"></iron-ajax>
+        <iron-ajax id="ajaxHandler" url="{{dataUrl}}" body="{{postData}}" method="{{method}}"" content-type="application/json" params='{"alt":"json", "q":"chrome"}' handle-as="json" on-response="handleResponse"></iron-ajax>
 
         <paper-drawer-panel id="paperDrawerPanel" force-narrow>
             <!-- Drawer Scroll Header Panel -->
@@ -90,7 +89,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <a data-route="contact" href="{{baseUrl}}contact">
                         <iron-icon icon="mail"></iron-icon>
                         <span>Contact</span>
-                    </a>
+                    </a> 
                 </paper-menu>
             </paper-scroll-header-panel>
 
@@ -98,8 +97,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-scroll-header-panel main id="headerPanelMain" fixed>
                 <!-- Main Toolbar -->
                 <paper-toolbar id="mainToolbar1">
-                    <span class="title">Drum Pad</span>
-                    <paper-icon-button icon="add">+</paper-icon-button>
+                    <span class="title">Drum Pad</span> <span>{{todayDisplay}}</span>
+                    <paper-icon-button icon="add" on-click="addExcercise">+</paper-icon-button>
                 </paper-toolbar>
 
                 <!-- Main Content -->
@@ -164,6 +163,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </platinum-sw-cache>
     </platinum-sw-register>
     -->
+        <paper-dialog id="addExcerciseModal" modal on-iron-overlay-closed="closed">
+            <div>
+                <span>name:</span><input type="text" value="{{newExcercise::input}}"></input>
+            </div>
+            <div>
+                <span>bpm:</span><input type="number" value="{{newExcerciseBpm::input}}"></input>
+            </div>
+            <div class="buttons">
+                <paper-button dialog-confirm autofocus>Confirm</paper-button>
+                <paper-button dialog-dismiss autofocus>Cancel</paper-button>
+            </div>
+        </paper-dialog>
 
     </template>
 
