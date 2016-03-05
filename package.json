@@ -30,6 +30,7 @@
     "vulcanize": ">= 1.4.2",
     "web-component-tester": "^4.0.0"
   },
+  "main": "server.js",
   "scripts": {
     "start" : "node server.js"
   },
