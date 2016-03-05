@@ -83,7 +83,7 @@ app.listen(port, function () {
 
 // web app
 //app.use('/', express.static(path.join(__dirname, '../dist')));
-app.use(express.static('.'));
+app.use(express.static('./dist'));
 // app.get('/', function(req, res){
 //     res.render('index.html');
 // });
