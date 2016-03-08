@@ -27,19 +27,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     app.newExcercise = "";
     app.newExcerciseBpm = 0;
 
-    //initialize drum excercies
+    //add a new excercise
     app.addExcercise = function (event) {
         // alert("add excercise!");
         var modal = document.getElementById("addExcerciseModal");
         modal.open();
     };
 
-    app.closed = function (event) {
+    app.addExcerciseClosed = function (event) {
         if (event.detail.confirmed) {
             //make a new excercise
             var newExcercise = { "name": app.newExcercise, "bpm": app.newExcerciseBpm };
             app.allExcercises.push(newExcercise);
             app.activeExcercises = app.remainingExcercisesForDate(app.allExcercises, app.today);
+
+            //call api to persist
+            app.postData = { "user": "Feiyang Chen", "excercise": newExcercise };
+            app.method = "put";
+            app.$.ajaxHandler.generateRequest();
         }
 
         //clear input
@@ -48,6 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     };
 
     app.dataUrl = "api";
+    // app.dataUrl = "http://localhost:3030/api"
     app.handleResponse = function (event) {
         app.today = new Date(event.detail.response.today);
         app.allExcercises = event.detail.response.excercises;
@@ -77,7 +83,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
         }
 
-        app.postData = { "name": event.detail.name };
+        app.postData = { "user": "Feiyang Chen", "name": event.detail.name, "date": app.today };
         app.method = "post";
         app.$.ajaxHandler.generateRequest();
 
