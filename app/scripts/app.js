@@ -50,8 +50,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         app.newExcerciseBpm = 0;
     };
 
-    // app.dataUrl = "api";
-    app.dataUrl = "http://localhost:3030/api";
+    app.dataUrl = "api";
+    //app.dataUrl = "http://localhost:3030/api";
     app.excerciseUpdatedUrl = app.dataUrl + "/update";
     app.excerciseCompletedUrl = app.dataUrl + "/complete";
 
