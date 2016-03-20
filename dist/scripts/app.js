@@ -52,8 +52,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         app.newExcerciseBpm = 0;
     };
 
-    app.dataUrl = "api";
-    // app.dataUrl = "http://localhost:3030/api"
+    // app.dataUrl = "api";
+    app.dataUrl = "http://localhost:3030/api";
+    app.excerciseUpdatedUrl = app.dataUrl + "/update";
+    app.excerciseCompletedUrl = app.dataUrl + "/complete";
+
     app.handleResponse = function (event) {
         app.today = new Date(event.detail.response.today);
         app.allExcercises = event.detail.response.excercises;
@@ -71,24 +74,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             return true;
         });
 
-        return remaining;
+        return excercises;
+        //return remaining;
     };
 
     window.addEventListener("excerciseCompleted", function (event) {
-        for (var i = 0; i < app.activeExcercises.length; i++) {
-            if (app.activeExcercises[i].name === event.detail.name) {
-                app.set("activeExcercises." + i + ".bpm", app.activeExcercises[i].bpm + 1);
-                app.activeExcercises[i].history = app.activeExcercises[i].history || [];
-                app.activeExcercises[i].history.push({ "date": app.today });
-            }
+        var excercise = findExcerciseById(event.detail.id, app.activeExcercises);
+
+        if (excercise) {
+            excercise.history = excercise.history || [];
+            excercise.history.push({ "date": app.today });
         }
 
-        app.postData = { "user": "Feiyang Chen", "name": event.detail.name, "date": app.today };
-        app.method = "post";
-        app.$.ajaxHandler.generateRequest();
+        app.postData = { "user": "Feiyang Chen", "id": event.detail.id, "date": app.today };
+        app.$.ajaxHandler_excerciseCompleted.generateRequest();
 
         app.activeExcercises = app.remainingExcercisesForDate(app.allExcercises, app.today);
     });
+
+    window.addEventListener("excerciseUpdated", function (event) {
+        var excercise = findExcerciseById(event.detail.id, app.activeExcercises);
+
+        app.postData = { "user": "Feiyang Chen", "excercise": excercise };
+        app.$.ajaxHandler_excerciseUpdated.generateRequest();
+    });
+
+    function findExcerciseById(id, excercises) {
+        var match;
+
+        for (var i = 0, l = excercises && excercises.length; i < l; i++) {
+            if (excercises[i].id === id) {
+                match = excercises[i];
+            }
+        }
+
+        return match;
+    }
 
     if (window.location.port === '') {// if production
         // Uncomment app.baseURL below and

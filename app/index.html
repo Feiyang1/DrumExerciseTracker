@@ -64,6 +64,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <template is="dom-bind" id="app">
 
         <iron-ajax id="ajaxHandler" url="{{dataUrl}}" body="{{postData}}" method="{{method}}"" content-type="application/json" params='{"alt":"json", "q":"chrome"}' handle-as="json" on-response="handleResponse"></iron-ajax>
+        <iron-ajax id="ajaxHandler_excerciseUpdated" url="{{excerciseUpdatedUrl}}" body="{{postData}}" method="post" content-type="application/json" params='{"alt":"json", "q":"chrome"}' handle-as="json" on-response=""></iron-ajax>
+        <iron-ajax id="ajaxHandler_excerciseCompleted" url="{{excerciseCompletedUrl}}" body="{{postData}}" method="post"" content-type="application/json" params='{"alt":"json", "q":"chrome"}' handle-as="json" on-response=""></iron-ajax>
 
         <paper-drawer-panel id="paperDrawerPanel" force-narrow>
             <!-- Drawer Scroll Header Panel -->
