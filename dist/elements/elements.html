@@ -18045,70 +18045,69 @@ module.exports = Array.isArray || function (arr) {
 
 },{}]},{},[1])(1)
 });</script>
-<script>
-  window.addEventListener('WebComponentsReady', function() {
+<script>'use strict';
 
-    // We use Page.js for routing. This is a Micro
-    // client-side router inspired by the Express router
-    // More info: https://visionmedia.github.io/page.js/
+window.addEventListener('WebComponentsReady', function () {
 
-    // Removes end / from app.baseUrl which page.base requires for production
-    if (window.location.port === '') {  // if production
-      page.base(app.baseUrl.replace(/\/$/, ''));
-    }
+  // We use Page.js for routing. This is a Micro
+  // client-side router inspired by the Express router
+  // More info: https://visionmedia.github.io/page.js/
 
-    // Middleware
-    function scrollToTop(ctx, next) {
-      app.scrollPageToTop();
-      next();
-    }
+  // Removes end / from app.baseUrl which page.base requires for production
+  if (window.location.port === '') {
+    // if production
+    page.base(app.baseUrl.replace(/\/$/, ''));
+  }
 
-    function closeDrawer(ctx, next) {
-      app.closeDrawer();
-      next();
-    }
+  // Middleware
+  function scrollToTop(ctx, next) {
+    app.scrollPageToTop();
+    next();
+  }
 
-    // Routes
-    page('*', scrollToTop, closeDrawer, function(ctx, next) {
-      next();
-    });
+  function closeDrawer(ctx, next) {
+    app.closeDrawer();
+    next();
+  }
 
-    page('/', function() {
-      app.route = 'home';
-    });
-
-    page(app.baseUrl, function() {
-      app.route = 'home';
-    });
-
-    page('/users', function() {
-      app.route = 'users';
-    });
-
-    page('/users/:name', function(data) {
-      app.route = 'user-info';
-      app.params = data.params;
-    });
-
-    page('/contact', function() {
-      app.route = 'contact';
-    });
-
-    // 404
-    page('*', function() {
-      app.$.toast.text = 'Can\'t find: ' + window.location.href  + '. Redirected you to Home Page';
-      app.$.toast.show();
-      page.redirect(app.baseUrl);
-    });
-
-    // add #! before urls
-    page({
-      hashbang: true
-    });
-
+  // Routes
+  page('*', scrollToTop, closeDrawer, function (ctx, next) {
+    next();
   });
-</script>
-<style is="custom-style">
+
+  page('/', function () {
+    app.route = 'home';
+  });
+
+  page(app.baseUrl, function () {
+    app.route = 'home';
+  });
+
+  page('/users', function () {
+    app.route = 'users';
+  });
+
+  page('/users/:name', function (data) {
+    app.route = 'user-info';
+    app.params = data.params;
+  });
+
+  page('/contact', function () {
+    app.route = 'contact';
+  });
+
+  // 404
+  page('*', function () {
+    app.$.toast.text = 'Can\'t find: ' + window.location.href + '. Redirected you to Home Page';
+    app.$.toast.show();
+    page.redirect(app.baseUrl);
+  });
+
+  // add #! before urls
+  page({
+    hashbang: true
+  });
+});</script><style is="custom-style">
     /*
    Polymer includes a shim for CSS Custom Properties that we can use for application theming.
    Below, you'll find the default palette for the Polymer Starter Kit layout. Feel free to play
@@ -18355,25 +18354,24 @@ module.exports = Array.isArray || function (arr) {
     <input value="{{greeting::input}}">
   </template>
 
-  <script>
-    (function() {
-      'use strict';
+  </dom-module>
+<script>'use strict';
 
-      Polymer({
-        is: 'my-greeting',
+(function () {
+  'use strict';
 
-        properties: {
-          greeting: {
-            type: String,
-            value: 'Welcome!',
-            notify: true
-          }
-        }
-      });
-    })();
-  </script>
-</dom-module>
-<dom-module id="my-list" assetpath="my-list/">
+  Polymer({
+    is: 'my-greeting',
+
+    properties: {
+      greeting: {
+        type: String,
+        value: 'Welcome!',
+        notify: true
+      }
+    }
+  });
+})();</script><dom-module id="my-list" assetpath="my-list/">
   <template>
     <style>
       :host {
@@ -18392,35 +18390,27 @@ module.exports = Array.isArray || function (arr) {
     </ul>
   </template>
 
-  <script>
-    (function() {
-      'use strict';
+  </dom-module>
+<script>'use strict';
 
-      Polymer({
-        is: 'my-list',
+(function () {
+  'use strict';
 
-        properties: {
-          items: {
-            type: Array,
-            notify: true,
-          }
-        },
+  Polymer({
+    is: 'my-list',
 
-        ready: function() {
-          this.items = [
-            'Responsive Web App boilerplate',
-            'Iron Elements and Paper Elements',
-            'End-to-end Build Tooling (including Vulcanize)',
-            'Unit testing with Web Component Tester',
-            'Routing with Page.js',
-            'Offline support with the Platinum Service Worker Elements'
-          ];
-        }
-      });
-    })();
-  </script>
-</dom-module>
-<iron-iconset-svg name="editor" size="24">
+    properties: {
+      items: {
+        type: Array,
+        notify: true
+      }
+    },
+
+    ready: function ready() {
+      this.items = ['Responsive Web App boilerplate', 'Iron Elements and Paper Elements', 'End-to-end Build Tooling (including Vulcanize)', 'Unit testing with Web Component Tester', 'Routing with Page.js', 'Offline support with the Platinum Service Worker Elements'];
+    }
+  });
+})();</script><iron-iconset-svg name="editor" size="24">
 <svg><defs>
 <g id="attach-file"><path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"></path></g>
 <g id="attach-money"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"></path></g>
@@ -20367,56 +20357,58 @@ is separate from validation, and `allowed-pattern` does not affect how the input
             </div>
         </paper-material>
     </template>
-    <script>
-        (function() {
+    </dom-module><script>'use strict';
+
+(function () {
     'use strict';
 
     Polymer({
-      is: 'drum-excercise',
+        is: 'drum-excercise',
 
-      properties: {
-        excercise: Object,
-        isNameEdit : {
-            type: Boolean,
-            value: false
+        properties: {
+            excercise: Object,
+            isNameEdit: {
+                type: Boolean,
+                value: false
+            },
+            isBpmEdit: {
+                type: Boolean,
+                value: false
+            }
         },
-        isBpmEdit : {
-            type: Boolean,
-            value: false
-        }
-      },
-      
-      completeTask : function(){
-          this.set("excercise.bpm", ++this.excercise.bpm);
-          this.fire("excerciseCompleted", {id: this.excercise.id});
-      },
-      
-      editting : function(e){
-          e.stopPropagation();
 
-      },
-      
-      editExcerciseName : function(e){
-          e.stopPropagation();
-          this.isNameEdit = true;
-          
-          //save the change and switch to view mode
-          setTimeout(() => {
-              this.isNameEdit = false;
-              this.fire("excerciseUpdated", {id: this.excercise.id});
-          }, 15000);
-      },
-      
-      editBpm : function(e){
-          e.stopPropagation();
-          this.isBpmEdit = true;
-          //save the change and switch to view mode
-          setTimeout(() => {
-              this.isBpmEdit = false;
-              this.fire("excerciseUpdated", {id: this.excercise.id});
-          }, 15000);
-      }
+        completeTask: function completeTask() {
+            this.set("excercise.bpm", ++this.excercise.bpm);
+            this.fire("excerciseCompleted", { id: this.excercise.id });
+        },
+
+        editting: function editting(e) {
+            e.stopPropagation();
+        },
+
+        editExcerciseName: function editExcerciseName(e) {
+            var _this = this;
+
+            e.stopPropagation();
+            this.isNameEdit = true;
+
+            //save the change and switch to view mode
+            setTimeout(function () {
+                _this.isNameEdit = false;
+                _this.fire("excerciseUpdated", { id: _this.excercise.id });
+            }, 15000);
+        },
+
+        editBpm: function editBpm(e) {
+            var _this2 = this;
+
+            e.stopPropagation();
+            this.isBpmEdit = true;
+            //save the change and switch to view mode
+            setTimeout(function () {
+                _this2.isBpmEdit = false;
+                _this2.fire("excerciseUpdated", { id: _this2.excercise.id });
+            }, 15000);
+        }
     });
-  })();
-    </script>
-</dom-module></div></body></html>
+})();</script></div></body></html>
