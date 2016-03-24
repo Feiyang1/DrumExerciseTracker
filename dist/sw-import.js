@@ -10,4 +10,3 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 */
 
 importScripts('bower_components/platinum-sw/service-worker.js');
-//# sourceMappingURL=sw-import.js.map
