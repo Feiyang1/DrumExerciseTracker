@@ -26,7 +26,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     app.method = "get";
     app.newExcercise = "";
     app.newExcerciseBpm = 0;
-
+    app.today = new Date();
+    app.today.setHours(0, 0, 0, 0);
     //add a new excercise
     app.addExcercise = function (event) {
         // alert("add excercise!");
@@ -52,13 +53,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         app.newExcerciseBpm = 0;
     };
 
-    app.dataUrl = "api";
-    //app.dataUrl = "http://localhost:3030/api";
+    //app.dataUrl = "api";
+    app.dataUrl = "http://localhost:3030/api";
     app.excerciseUpdatedUrl = app.dataUrl + "/update";
     app.excerciseCompletedUrl = app.dataUrl + "/complete";
 
     app.handleResponse = function (event) {
-        app.today = new Date(event.detail.response.today);
+        //  app.today = new Date(event.detail.response.today);
         app.allExcercises = event.detail.response.excercises;
         app.activeExcercises = app.remainingExcercisesForDate(app.allExcercises, app.today);
         app.todayDisplay = app.today.getMonth() + 1 + "-" + app.today.getDate() + "-" + app.today.getFullYear();
