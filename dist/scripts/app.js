@@ -53,8 +53,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         app.newExcerciseBpm = 0;
     };
 
-    //app.dataUrl = "api";
-    app.dataUrl = "http://localhost:3030/api";
+    app.dataUrl = "api";
+    //app.dataUrl = "http://localhost:3030/api";
     app.excerciseUpdatedUrl = app.dataUrl + "/update";
     app.excerciseCompletedUrl = app.dataUrl + "/complete";
 
@@ -68,6 +68,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     app.remainingExcercisesForDate = function (excercises, date) {
         var remaining = excercises.filter(function (excercise) {
             if (excercise.history && excercise.history.length > 0) {
+                excercise.history.sort(function (a, b) {
+                    return new Date(a.date).getTime() - new Date(b.date).getTime();
+                });
                 var LastExcercise = new Date(excercise.history[excercise.history.length - 1].date);
                 return !(LastExcercise.getTime() === date.getTime());
             }
