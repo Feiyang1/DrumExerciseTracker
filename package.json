@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:js": "webpack",
+    "build": "npm run build:js",
+    "watch": "watch \"npm run build\" src"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
   "devDependencies": {
     "awesome-typescript-loader": "^3.0.3",
     "source-map-loader": "^0.1.6",
-    "typescript": "^2.1.6"
+    "typescript": "^2.1.6",
+    "watch": "^1.0.1"
   }
 }

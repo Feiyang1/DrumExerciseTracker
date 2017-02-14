@@ -1,12 +1,24 @@
 import * as React from "react";
+import * as MUI from "material-ui";
 
-interface IExcerciseProps { };
+import ExcerciseModel from "../models/excerciseModel";
+
+interface IExcerciseProps { 
+    model:ExcerciseModel 
+};
 interface IExcerciseState { };
 
-class Excercise extends React.Component<IExcerciseProps, IExcerciseState> {
+export default class Excercise extends React.Component<IExcerciseProps, IExcerciseState> {
     public render(){
+        
         return (
-            <div></div>
+            <MUI.Paper>
+                <div>{this.props.model.name}</div>
+                <div>{this.props.model.time_signature}</div>
+                <div>{this.props.model.bpm}</div>
+                <div>{this.props.model.increment}</div>
+            </MUI.Paper>
         );
     }
+
 }

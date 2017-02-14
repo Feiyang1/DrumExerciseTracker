@@ -1,9 +1,13 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
-import { Hello } from "./components/Hello";
+import data from "./data";
+import Excercise from "./components/excercise";
 
 ReactDOM.render(
-    <Hello compiler="Typescript" framework="React"/>,
+    <MuiThemeProvider>
+        <Excercise model={data[0]}/>
+    </MuiThemeProvider>,
     document.getElementById("example")
-)
+);
