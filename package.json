@@ -22,6 +22,7 @@
     "@types/material-ui": "^0.16.50",
     "@types/react": "^15.0.8",
     "@types/react-dom": "^0.14.23",
+    "@types/react-tap-event-plugin": "0.0.30",
     "material-ui": "^0.17.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
