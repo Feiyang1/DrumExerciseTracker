@@ -1,28 +1,16 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import * as injectTapEventPlugin from "react-tap-event-plugin";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import AppBar from "material-ui/AppBar";
-import IconButton from "material-ui/IconButton";
-import NavigationClose from "material-ui/svg-icons/navigation/close";
+
+import AppBar from "react-toolbox/lib/app_bar";
+//const style = require<any>("react-toolbox/lib/app_bar/theme.scss");
 
 import data from "./data";
-import Excercise from "./components/excercise";
-
-injectTapEventPlugin();
+import ExcerciseList from "./components/excerciseList";
 
 ReactDOM.render(
-    <MuiThemeProvider>
-        <div>
-        <AppBar title="Drum Pad"
-        iconElementLeft={<div></div>}
-        />
-        {
-            data.map((excercise)=>{
-                return <Excercise model={excercise}/>
-            })
-        }
-        </div>
-    </MuiThemeProvider>,
+    <div>
+        <AppBar title="Drum Pad"/>
+        <ExcerciseList excercises={data}/>
+    </div>,
     document.getElementById("example")
 );

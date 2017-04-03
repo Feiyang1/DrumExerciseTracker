@@ -1,24 +1,32 @@
 import * as React from "react";
-import * as MUI from "material-ui";
+import Ripple from "react-toolbox/lib/ripple";
+import { Card, CardTitle, CardText } from "react-toolbox/lib/card";
 
 import ExcerciseModel from "../models/excerciseModel";
+import * as styles from "./excercise.css";
 
-interface IExcerciseProps { 
-    model:ExcerciseModel 
+var theme = require("react-toolbox/lib/ripple/theme.css");
+interface IExcerciseProps {
+    model: ExcerciseModel
 };
 interface IExcerciseState { };
 
+let RippleCard = Ripple({spread: 0.3, theme: theme})(Card);
 export default class Excercise extends React.Component<IExcerciseProps, IExcerciseState> {
-    public render(){
-        
+    public render() {
         return (
-            <MUI.Paper>
-                <div>{this.props.model.name}</div>
-                <div>{this.props.model.time_signature}</div>
-                <div>{this.props.model.bpm}</div>
-                <div>{this.props.model.increment}</div>
-            </MUI.Paper>
+            <RippleCard className={styles.excerciseContainer} style={{position: "relative"}} onClick={this.handleClick}>
+                <CardTitle title={this.props.model.name} />
+                <CardText>
+                    <div>time signature: {this.props.model.time_signature}</div>
+                    <div>BPM: {this.props.model.bpm}</div>
+                    <div>Increment: {this.props.model.increment} per day</div>
+                </CardText>
+            </RippleCard>
         );
     }
 
+    private handleClick(){
+        //alert("yes")
+    }
 }
