@@ -52,6 +52,7 @@
     "style-loader": "^0.13.1",
     "typed-css-modules": "^0.2.0",
     "typescript": "^2.2.2",
-    "watch": "^1.0.1"
+    "watch": "^1.0.1",
+    "webpack": "^2.2.1"
   }
 }
