@@ -7,6 +7,8 @@ create table excercises (
     id int NOT NULL Identity(1,1) primary key,
     name nvarchar(100) ,
     bpm int,
+    active bit,
+    time_signature nvarchar(100),
     user_id int foreign key references users(id)
 )
 
@@ -20,6 +22,8 @@ insert into users (name) values ('Feiyang Chen')
 
 insert into excercises (name, bpm, user_id) values ('double stroke roll - full stroke', 62, 1)
 insert into excercises (name, bpm, user_id) values ('paradiddle', 43, 1)
+insert into excercises (name, bpm, user_id, active, time_signature) values ('base drum1', 111, 1, 1, '4/4')
+insert into excercises (name, bpm, user_id, active, time_signature) values ('base drum2', 52, 1, 1, '4/4')
 
 select * 
 from excercises inner join users on users.id = excercises.user_id

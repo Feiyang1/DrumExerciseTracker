@@ -1,0 +1,7 @@
+.filter{
+        cursor: pointer;
+}
+.active{
+        background-color: rgb(48, 63, 159);
+        color: white;
+}

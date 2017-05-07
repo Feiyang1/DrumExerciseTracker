@@ -7,7 +7,8 @@
     "build:js": "webpack",
     "prebuild": "tcm src",
     "build": "npm run build:js",
-    "watch": "watch \"npm run build\" src --filter=watch-ignore.js"
+    "watch": "watch \"npm run build\" src --filter=watch-ignore.js",
+    "start": "node backend/server.js"
   },
   "repository": {
     "type": "git",
@@ -22,11 +23,19 @@
   "dependencies": {
     "@types/react": "^15.0.8",
     "@types/react-dom": "^0.14.23",
+    "babel-polyfill": "^6.23.0",
+    "body-parser": "^1.17.1",
+    "cors": "^2.8.3",
+    "es6-promise": "^4.1.0",
+    "express": "^4.15.2",
+    "isomorphic-fetch": "^2.2.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
     "react-toolbox": "^2.0.0-beta.5",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0",
+    "tedious": "^2.0.0"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.0.3",
@@ -42,7 +51,7 @@
     "source-map-loader": "^0.1.6",
     "style-loader": "^0.13.1",
     "typed-css-modules": "^0.2.0",
-    "typescript": "^2.2.1",
+    "typescript": "^2.2.2",
     "watch": "^1.0.1"
   }
 }
