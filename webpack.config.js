@@ -1,9 +1,15 @@
+var webpack = require("webpack");
 var path = require("path");
-module.exports = {
-    entry: "./src/index.tsx",
+
+const frontend = {
+    entry: [
+        'react-hot-loader/patch',
+        "./src/index.tsx"
+    ],
     output: {
+        path: path.join(__dirname, "dist"),
         filename: "bundle.js",
-        path: path.join(__dirname, "dist")
+        publicPath: "/dist/"
     },
 
     // Enable sourcemaps for debugging webpack's output.
@@ -17,7 +23,15 @@ module.exports = {
     module: {
         loaders: [
             // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
-            { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+            {
+                test: /\.tsx?$/,
+                loaders: [
+                    "react-hot-loader/webpack", 
+                    "awesome-typescript-loader"
+                ],
+                exclude: path.resolve(__dirname, 'node_modules'),
+                include: path.resolve(__dirname, "src"),
+            },
             {
                 test: /\.css$/,
                 use: [
@@ -45,4 +59,20 @@ module.exports = {
         "react": "React",
         "react-dom": "ReactDOM"
     },
+    plugins: [
+        new webpack.NamedModulesPlugin(),
+        new webpack.HotModuleReplacementPlugin()
+    ],
+    devServer: {
+        contentBase: "./",
+        proxy: {
+            "/api": {
+                target: "http://localhost:3030",
+                secure: false
+            }
+        },
+        hot: true
+    }
 };
+
+module.exports = frontend;

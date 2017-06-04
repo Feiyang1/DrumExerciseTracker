@@ -4,7 +4,7 @@ export const ADD_EXCERCISE = "ADD_EXCERCISE";
 export function addExcercise(excercise) {
     return {
         type: ADD_EXCERCISE,
-        excercise
+        excercise 
     };
 };
 
@@ -18,7 +18,6 @@ export function deleteExcercise(excercise_id) {
 
 export function tryCompleteExcercise(excercise_id) {
     return function (dispatch) {
-        //let url = "http://localhost:3030/api/complete";
         let url = "api/complete";
         let headers = {
             "Content-Type": "application/json"
@@ -56,7 +55,6 @@ export function receiveExcercises(json) {
 
 export function fetchExcercises() {
     return function (dispatch) {
-        //let url = "http://localhost:3030/api?user=" + encodeURIComponent("Feiyang Chen");
         let url = "api?user=" + encodeURIComponent("Feiyang Chen");
         return fetch(url).then(response => response.json()).then(json => {
             dispatch(receiveExcercises(json ? json.excercises : null));
