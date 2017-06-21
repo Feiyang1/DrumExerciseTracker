@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import AppBar from "react-toolbox/lib/app_bar";
+import AppBar from "../containers/appBarContainer";
 import VisibleExcerciseList from "../containers/visibleExcerciseList";
 import Header from "./header";
 
-const App: React.StatelessComponent<any> = ({ active, className, children, onClick }) => {
+const App: React.StatelessComponent<any> = () => {
     return <div>
-        <AppBar title="Drum Pad" />
+        <AppBar />
         <Header />
         <VisibleExcerciseList />
     </div>

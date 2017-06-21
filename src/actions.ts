@@ -70,3 +70,17 @@ export function setVisibilityFilter(filter) {
         filter
     };
 }
+
+export const SHOW_ADDEXCERCISEBOX = "SHOW_ADDEXCERCISEBOX";
+export function showAddExcerciseBox(){
+    return {
+        type: SHOW_ADDEXCERCISEBOX
+    }
+}
+
+export const HIDE_ADDEXCERCISEBOX = "HIDE_ADDEXCERCISEBOX";
+export function hideAddExcerciseBox(){
+    return {
+        type: HIDE_ADDEXCERCISEBOX
+    }
+}

@@ -64,6 +64,6 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-const VisibleExcerciseList = connect(mapStateToProps, mapDispatchToProps)(ExcerciseList);
+const VisibleExcerciseList: React.ComponentClass<{}> = connect(mapStateToProps, mapDispatchToProps)(ExcerciseList);
 
 export default VisibleExcerciseList;

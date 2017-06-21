@@ -1,6 +1,6 @@
 import * as Models from "../models";
 import { ADD_EXCERCISE, COMPLETE_EXCERCISE, 
-    DELETE_EXCERCISE, RECEIVE_EXCERCISES, SET_VISIBILITYFILTER } from "../actions";
+    DELETE_EXCERCISE, RECEIVE_EXCERCISES, SET_VISIBILITYFILTER, SHOW_ADDEXCERCISEBOX, HIDE_ADDEXCERCISEBOX } from "../actions";
 
 export default (state: Models.DrumExcerciseStore, action: Models.Action) => {
     let newState = {...state};
@@ -25,6 +25,10 @@ export default (state: Models.DrumExcerciseStore, action: Models.Action) => {
             return newState;
         case SET_VISIBILITYFILTER:
             newState.visibilityFilter = action.filter;
+            return newState;
+        case SHOW_ADDEXCERCISEBOX:
+            return newState;
+        case HIDE_ADDEXCERCISEBOX:
             return newState;
         default:
             return state;
