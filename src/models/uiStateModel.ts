@@ -1,5 +1,5 @@
 export interface UiState{
-    showAddExcericesControl: boolean
+    showAddExcericeModal: boolean
 }
 
 export default UiState;

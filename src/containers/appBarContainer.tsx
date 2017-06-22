@@ -7,7 +7,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onClick: () => {
             dispatch(showAddExcerciseBox());
-            alert("add");
         }
     }
 };

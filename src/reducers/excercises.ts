@@ -27,8 +27,10 @@ export default (state: Models.DrumExcerciseStore, action: Models.Action) => {
             newState.visibilityFilter = action.filter;
             return newState;
         case SHOW_ADDEXCERCISEBOX:
+            newState.uiState.showAddExcericeModal = true;
             return newState;
         case HIDE_ADDEXCERCISEBOX:
+            newState.uiState.showAddExcericeModal = false;
             return newState;
         default:
             return state;
