@@ -1,10 +1,25 @@
 import * as fetch from "isomorphic-fetch";
-export const ADD_EXCERCISE = "ADD_EXCERCISE";
+import { ExcerciseModel } from "./models";
+import { INewExcercise } from "./components/addExcerciseModal";
 
+export const TRY_ADD_EXCERCISE = "TRY_ADD_EXCERCISE";
+export function tryAddExcercise(excercise: INewExcercise) {
+    return function (dispatch) {
+        if (process.env.NODE_ENV !== "production") { // dev
+            const newExcercise = new ExcerciseModel("" + new Date().getTime(), excercise.name, excercise.bpm, excercise.time_signature, excercise.increment,[], true );
+            dispatch(addExcercise(newExcercise));
+        }
+        else{ // save it to database
+
+        }
+    };
+}
+
+export const ADD_EXCERCISE = "ADD_EXCERCISE";
 export function addExcercise(excercise) {
     return {
         type: ADD_EXCERCISE,
-        excercise 
+        excercise
     };
 };
 
@@ -18,22 +33,28 @@ export function deleteExcercise(excercise_id) {
 
 export function tryCompleteExcercise(excercise_id) {
     return function (dispatch) {
-        let url = "api/complete";
-        let headers = {
-            "Content-Type": "application/json"
-        };
-        let config = {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify({ user: "Feiyang Chen", id: excercise_id, date: new Date() })
-        };
-        return fetch(url, config).then((response) => response.json())
-            .then((json) => {
-                dispatch(completeExcercise(json && json.excercises && json.excercises[0]));
-            })
-            .catch(() => {
-                console.log("error completing excercise!");
-            })
+
+        if (process.env.NODE_ENV !== "production") { // dev
+            dispatch(completeExcerciseLocal(excercise_id));
+        }
+        else { // prod
+            let url = "api/complete";
+            let headers = {
+                "Content-Type": "application/json"
+            };
+            let config = {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify({ user: "Feiyang Chen", id: excercise_id, date: new Date() })
+            };
+            return fetch(url, config).then((response) => response.json())
+                .then((json) => {
+                    dispatch(completeExcercise(json && json.excercises && json.excercises[0]));
+                })
+                .catch(() => {
+                    console.log("error completing excercise!");
+                })
+        }
     }
 };
 
@@ -43,6 +64,14 @@ export function completeExcercise(excercise) {
         type: COMPLETE_EXCERCISE,
         excercise
     };
+}
+
+export const COMPLETE_EXCERCISE_LOCAL = "COMPLETE_EXCERCISE_LOCAL";
+export function completeExcerciseLocal(excercise_id) {
+    return {
+        type: COMPLETE_EXCERCISE_LOCAL,
+        id: excercise_id
+    }
 }
 
 export const RECEIVE_EXCERCISES = "RECEIVE_EXCERCISES";
@@ -72,14 +101,14 @@ export function setVisibilityFilter(filter) {
 }
 
 export const SHOW_ADDEXCERCISEBOX = "SHOW_ADDEXCERCISEBOX";
-export function showAddExcerciseBox(){
+export function showAddExcerciseBox() {
     return {
         type: SHOW_ADDEXCERCISEBOX
     }
 }
 
 export const HIDE_ADDEXCERCISEBOX = "HIDE_ADDEXCERCISEBOX";
-export function hideAddExcerciseBox(){
+export function hideAddExcerciseBox() {
     return {
         type: HIDE_ADDEXCERCISEBOX
     }

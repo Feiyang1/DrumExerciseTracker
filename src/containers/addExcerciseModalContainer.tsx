@@ -1,7 +1,8 @@
 import { connect } from "react-redux";
 
 import * as Models from "../models";
-import AddExcerciseModal from "../components/addExcerciseModal";
+import AddExcerciseModal, { INewExcercise } from "../components/addExcerciseModal";
+import { hideAddExcerciseBox, tryAddExcercise } from "../actions";
 
 const mapStateToProps = (state: Models.DrumExcerciseStore, ownProps) => {
     return {
@@ -11,9 +12,16 @@ const mapStateToProps = (state: Models.DrumExcerciseStore, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
+        onCancel: () => {
+            dispatch(hideAddExcerciseBox());
+        },
+        onConfirm: (localState: INewExcercise) => {
+            dispatch(tryAddExcercise(localState));
+            dispatch(hideAddExcerciseBox());
+        }
     }
 };
 
-const AddExcerciseModalContainer = connect(mapStateToProps, mapDispatchToProps)(AddExcerciseModal);
+const AddExcerciseModalContainer: any = connect(mapStateToProps, mapDispatchToProps)(AddExcerciseModal);
 
 export default AddExcerciseModalContainer;

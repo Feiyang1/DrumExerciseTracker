@@ -26,7 +26,7 @@ const frontend = {
             {
                 test: /\.tsx?$/,
                 loaders: [
-                    "react-hot-loader/webpack", 
+                    "react-hot-loader/webpack",
                     "awesome-typescript-loader"
                 ],
                 exclude: path.resolve(__dirname, 'node_modules'),
@@ -58,20 +58,6 @@ const frontend = {
     externals: {
         "react": "React",
         "react-dom": "ReactDOM"
-    },
-    plugins: [
-        new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin()
-    ],
-    devServer: {
-        contentBase: "./",
-        proxy: {
-            "/api": {
-                target: "http://localhost:3030",
-                secure: false
-            }
-        },
-        hot: true
     }
 };
 

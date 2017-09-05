@@ -1,18 +1,54 @@
 import * as React from "react";
 
-import Dialog from "react-toolbox/lib/dialog"
+import Dialog from "react-toolbox/lib/dialog";
+import Input from "react-toolbox/lib/input";
 
-const modal: React.StatelessComponent<any> = ({active}) => {
-    let actions = [
-        { label: "Cancel", onClick: ()=>{} },
-        { label: "Save", onClick: ()=>{} }
-    ];
-    return <Dialog
-        actions={actions}
-        active={active}
-        title='Add'>
-        <p>add an excercise</p>
-    </Dialog>
+export interface INewExcercise {
+    name: string,
+    bpm: number,
+    time_signature: string,
+    increment: number
 }
 
-export default modal;
+export default class AddExcerciseModal extends React.Component<{ active, onCancel, onConfirm }, any>{
+
+    constructor() {
+        super();
+        this.state = {};
+    }
+
+    handleChange(name, value) {
+        this.setState({ ...this.state, [name]: value });
+    }
+
+    render() {
+
+        let actions = [
+            {
+                label: "Cancel", onClick: () => {
+                    this.clean(); // clean the state when window is closed.    
+                    this.props.onCancel();
+                }
+            },
+            {
+                label: "Confirm", onClick: () => {
+                    this.props.onConfirm(this.state);
+                }
+            }
+        ];
+
+        return <Dialog
+            actions={actions}
+            active={this.props.active}
+            title='Add'>
+            <Input type="text" value={this.state.name} label="Name" onChange={this.handleChange.bind(this, "name")}></Input>
+            <Input type="text" value={this.state.time_signature} label="Time Signature" onChange={this.handleChange.bind(this, "time_signature")}></Input>
+            <Input type="number" value={this.state.bpm} label="BPM" onChange={this.handleChange.bind(this, "bpm")}></Input>
+            <Input type="number" value={this.state.increment} label="Increment Per Day" onChange={this.handleChange.bind(this, "increment")}></Input>
+        </Dialog>
+    }
+
+    clean() {
+        this.state = {};
+    }
+}

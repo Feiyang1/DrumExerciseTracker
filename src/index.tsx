@@ -3,6 +3,7 @@ import * as ReactDOM from "react-dom";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunkMiddleware from "redux-thunk";
+import logger from "redux-logger";
 import { AppContainer } from "react-hot-loader";
 
  import App from "./components/app";
@@ -11,7 +12,7 @@ import { AppContainer } from "react-hot-loader";
  import data from "./data";
  import * as Models from "./models";
 
-let store = createStore<Models.DrumExcerciseStore>(excerciseApp, { excercises: data, visibilityFilter: "today", uiState: {showAddExcericeModal: false} }, applyMiddleware(thunkMiddleware));
+let store = createStore<Models.DrumExcerciseStore>(excerciseApp, { excercises: data, visibilityFilter: "today", uiState: {showAddExcericeModal: false} }, applyMiddleware(logger, thunkMiddleware));
 store.dispatch(fetchExcercises()).then(() => {
     console.log("fetch success");
 });

@@ -8,5 +8,6 @@ interface RequireImport {
     default: any;
 }
 
+declare const process:any;
 
 // declare const module:any;
