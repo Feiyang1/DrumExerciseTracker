@@ -6,6 +6,8 @@
   "dependencies": {
     "body-parser": "^1.17.1",
     "cors": "^2.8.3",
+    "express": "^4.15.4",
+    "isomorphic-fetch": "^2.2.1",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-redux": "^5.0.3",
@@ -16,6 +18,7 @@
     "tedious": "^2.0.0"
   },
   "devDependencies": {
+    "@types/isomorphic-fetch": "0.0.34",
     "@types/react": "^15.0.6",
     "@types/react-dom": "^0.14.22",
     "@types/react-redux": "^4.4.40",
@@ -40,8 +43,8 @@
     "prestart": "tcm src",
     "start": "webpack-dev-server --config webpack.dev.js",
     "startserv": "node backend/server.js",
-    "webpack": "webpack --config webpack.prod.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "webpack": "webpack --display-optimization-bailout --config webpack.prod.js",
+    "build": "npm run webpack"
   },
   "repository": {
     "type": "git",
