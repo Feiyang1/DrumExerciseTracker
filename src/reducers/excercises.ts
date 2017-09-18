@@ -29,7 +29,7 @@ export default (state: Models.DrumExcerciseStore, action: Models.Action) => {
                 if (excercise.id === action.id) {
                     let newOne = { ...excercise };
                     newOne.history.push({bpm: newOne.bpm, date: new Date()});
-                    newOne.bpm ++;
+                    newOne.bpm += excercise.increment ? excercise.increment: 1;
                     return newOne;
                 } else {
                     return excercise;
