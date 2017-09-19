@@ -21,6 +21,10 @@ export default class AddExcerciseModal extends React.Component<{ active, onCance
         this.setState({ ...this.state, [name]: value });
     }
 
+    handleNumberChange(name, value){
+        this.handleChange(name, parseFloat(value));
+    }
+
     render() {
 
         let actions = [
@@ -43,8 +47,8 @@ export default class AddExcerciseModal extends React.Component<{ active, onCance
             title='Add'>
             <Input type="text" value={this.state.name} label="Name" onChange={this.handleChange.bind(this, "name")}></Input>
             <Input type="text" value={this.state.time_signature} label="Time Signature" onChange={this.handleChange.bind(this, "time_signature")}></Input>
-            <Input type="number" value={this.state.bpm} label="BPM" onChange={this.handleChange.bind(this, "bpm")}></Input>
-            <Input type="number" value={this.state.increment} label="Increment Per Day" onChange={this.handleChange.bind(this, "increment")}></Input>
+            <Input type="number" value={this.state.bpm} label="BPM" onChange={this.handleNumberChange.bind(this, "bpm")}></Input>
+            <Input type="number" value={this.state.increment} label="Increment Per Day" onChange={this.handleNumberChange.bind(this, "increment")}></Input>
         </Dialog>
     }
 
