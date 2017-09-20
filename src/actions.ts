@@ -10,7 +10,26 @@ export function tryAddExcercise(excercise: INewExcercise) {
             dispatch(addExcercise(newExcercise));
         }
         else{ // save it to database
-
+            const url = "api";
+            let headers = {
+                "Content-Type": "application/json"
+            };
+            let config = {
+                method: "PUT",
+                headers: headers,
+                body: JSON.stringify({ user: "Feiyang Chen", excercise })
+            };
+            return fetch(url, config).then(response => response.json()) 
+                .then(json => {
+                    console.log("added excercise - " + JSON.stringify(json));
+                    const newExcercise = json ? json.excercise : undefined;
+                    if (newExcercise){
+                        dispatch(addExcercise(newExcercise));                        
+                    }
+                })
+                .catch(() => {
+                    console.log("error adding excercise!");
+                })
         }
     };
 }
