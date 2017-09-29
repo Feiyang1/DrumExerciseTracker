@@ -3,18 +3,13 @@ import * as React from "react";
 import Dialog from "react-toolbox/lib/dialog";
 import Input from "react-toolbox/lib/input";
 
-export interface INewExcercise {
-    name: string,
-    bpm: number,
-    time_signature: string,
-    increment: number
-}
+import ExcerciseModel from "../models/excerciseModel";
 
-export default class AddExcerciseModal extends React.Component<{ onCancel, onConfirm }, any>{
+export default class EditExcerciseModal extends React.Component<{ onCancel, onConfirm, excercise: ExcerciseModel }, any>{
 
-    constructor() {
-        super();
-        this.state = {};
+    constructor(props) {
+        super(props);
+        this.state = {...props.excercise};
     }
 
     handleChange(name, value) {
@@ -44,7 +39,7 @@ export default class AddExcerciseModal extends React.Component<{ onCancel, onCon
         return <Dialog
             actions={actions}
             active={true}
-            title='Add'>
+            title='Edit'>
             <Input type="text" value={this.state.name} label="Name" onChange={this.handleChange.bind(this, "name")}></Input>
             <Input type="text" value={this.state.time_signature} label="Time Signature" onChange={this.handleChange.bind(this, "time_signature")}></Input>
             <Input type="number" value={this.state.bpm} label="BPM" onChange={this.handleNumberChange.bind(this, "bpm")}></Input>

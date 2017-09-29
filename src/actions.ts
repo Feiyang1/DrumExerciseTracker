@@ -5,11 +5,11 @@ import { INewExcercise } from "./components/addExcerciseModal";
 export const TRY_ADD_EXCERCISE = "TRY_ADD_EXCERCISE";
 export function tryAddExcercise(excercise: INewExcercise) {
     return function (dispatch) {
-        if (process.env.NODE_ENV !== "production") { // dev
-            const newExcercise = new ExcerciseModel("" + new Date().getTime(), excercise.name, excercise.bpm, excercise.time_signature, excercise.increment,[], true );
+        if (process.env.NODE_ENV === "dev") { // dev
+            const newExcercise = new ExcerciseModel("" + new Date().getTime(), excercise.name, excercise.bpm, excercise.time_signature, excercise.increment, [], true);
             dispatch(addExcercise(newExcercise));
         }
-        else{ // save it to database
+        else { // save it to database
             const url = "api";
             let headers = {
                 "Content-Type": "application/json"
@@ -19,17 +19,17 @@ export function tryAddExcercise(excercise: INewExcercise) {
                 headers: headers,
                 body: JSON.stringify({ user: "Feiyang Chen", excercise })
             };
-            return fetch(url, config).then(response => response.json()) 
+            return fetch(url, config).then(response => response.json())
                 .then(json => {
                     console.log("added excercise - " + JSON.stringify(json));
                     const newExcercise = json ? json.excercise : undefined;
-                    if (newExcercise){
-                        dispatch(addExcercise(newExcercise));                        
+                    if (newExcercise) {
+                        dispatch(addExcercise(newExcercise));
                     }
                 })
                 .catch(() => {
                     console.log("error adding excercise!");
-                })
+                });
         }
     };
 }
@@ -53,7 +53,7 @@ export function deleteExcercise(excercise_id) {
 export function tryCompleteExcercise(excercise_id) {
     return function (dispatch) {
 
-        if (process.env.NODE_ENV !== "production") { // dev
+        if (process.env.NODE_ENV === "dev") { // dev
             dispatch(completeExcerciseLocal(excercise_id));
         }
         else { // prod
@@ -90,7 +90,42 @@ export function completeExcerciseLocal(excercise_id) {
     return {
         type: COMPLETE_EXCERCISE_LOCAL,
         id: excercise_id
-    }
+    };
+}
+
+export function tryUpdateExcercise(excercise: ExcerciseModel) {
+    return function (dispatch) {
+        if (process.env.NODE_ENV !== "production") { // dev
+            dispatch(updateExcercise(excercise));
+        }
+        else {
+            const url = "api/update";
+            let headers = {
+                "Content-Type": "application/json"
+            };
+            let config = {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify({ user: "Feiyang Chen", excercise })
+            };
+            return fetch(url, config).then(response => response.json())
+                .then(json => {
+                    console.log("updated excercise - " + JSON.stringify(json));
+                        dispatch(updateExcercise(excercise));
+                })
+                .catch(() => {
+                    console.log("error updating excercise!");
+                });
+        }
+    };
+}
+
+export const UPDATE_EXCERCISE = "UPDATE_EXCERCISE";
+export function updateExcercise(excercise: ExcerciseModel) {
+    return {
+        type: UPDATE_EXCERCISE,
+        payload: excercise
+    };
 }
 
 export const RECEIVE_EXCERCISES = "RECEIVE_EXCERCISES";
@@ -119,16 +154,17 @@ export function setVisibilityFilter(filter) {
     };
 }
 
-export const SHOW_ADDEXCERCISEBOX = "SHOW_ADDEXCERCISEBOX";
-export function showAddExcerciseBox() {
+export const SHOW_DIALOG = "SHOW_DIALOG";
+export function showDialog(payload) {
     return {
-        type: SHOW_ADDEXCERCISEBOX
-    }
+        type: SHOW_DIALOG,
+        payload
+    };
 }
 
-export const HIDE_ADDEXCERCISEBOX = "HIDE_ADDEXCERCISEBOX";
-export function hideAddExcerciseBox() {
+export const HIDE_DIALOG = "HIDE_DIALOG";
+export function hideDialog() {
     return {
-        type: HIDE_ADDEXCERCISEBOX
-    }
+        type: HIDE_DIALOG
+    };
 }

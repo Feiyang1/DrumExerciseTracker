@@ -1,7 +1,8 @@
 import { connect } from "react-redux"
 import ExcerciseList from "../components/excerciseList"
 import * as Models from "../models";
-import { tryCompleteExcercise } from "../actions";
+import { tryCompleteExcercise, tryUpdateExcercise, showDialog, hideDialog } from "../actions";
+import EditExcerciseModal from "../components/editExcerciseModal";
 
 const getVisibleExcercises = (excercises: Models.ExcerciseModel[], visibilityFilter) => {
     let visibleExcercises = [];
@@ -55,11 +56,31 @@ const mapStateToProps = (state: Models.DrumExcerciseStore) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onExcerciseClick: (visibilityFilter) => {
-            return (id) => {
+            return (id: string) => {
                 if(visibilityFilter === "today") {
                     dispatch(tryCompleteExcercise(id));
                 }
             };
+        },
+        onExcerciseEditClick: (excercise: Models.ExcerciseModel) => {
+            console.log("edit " + excercise.id);
+            dispatch(showDialog({
+                component: EditExcerciseModal,
+                props: {
+                    onCancel: () => {
+                        dispatch(hideDialog());
+                    },
+                    onConfirm: (updatedExercise) => {
+                        dispatch(tryUpdateExcercise(updatedExercise));
+                        dispatch(hideDialog());
+                    },
+                    excercise
+                }
+            }));
+        },
+        onExcerciseDeleteClick: (id: string) => {
+            console.log("delete " + id);
+           // dispatch();
         }
     }
 };

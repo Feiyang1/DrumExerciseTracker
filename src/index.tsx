@@ -12,7 +12,11 @@ import { AppContainer } from "react-hot-loader";
  import data from "./data";
  import * as Models from "./models";
 
-let store = createStore<Models.DrumExcerciseStore>(excerciseApp, { excercises: data, visibilityFilter: "today", uiState: {showAddExcericeModal: false} }, applyMiddleware(logger, thunkMiddleware));
+let store = createStore<Models.DrumExcerciseStore>(excerciseApp, { 
+    excercises: data, 
+    visibilityFilter: "today", 
+    dialog: { component: null, props: null, show: false},
+    uiState: {showAddExcericeModal: false} }, applyMiddleware(logger, thunkMiddleware));
 store.dispatch(fetchExcercises()).then(() => {
     console.log("fetch success");
 });

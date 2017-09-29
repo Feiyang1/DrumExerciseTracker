@@ -1,3 +1,25 @@
 .excerciseContainer{
     margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+
+    & .excerciseEditContainer {
+        display: flex;
+        flex-direction: row;
+
+        & .editButton, & .deleteButton {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 5px 0 5px;
+        }
+
+        & .editButton {
+            background-color: green;
+        }
+
+        & .deleteButton {
+            background-color: red;
+        }
+    }
 }
