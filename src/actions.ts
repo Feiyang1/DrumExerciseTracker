@@ -42,11 +42,38 @@ export function addExcercise(excercise) {
     };
 };
 
+export function tryDeleteExcercise(id: string) {
+    return function (dispatch) {
+        if (process.env.NODE_ENV === "dev") { // dev
+            dispatch(deleteExcercise(id));
+        }
+        else {
+            const url = "api/delete";
+            const headers = {
+                "Content-Type": "application/json"
+            };
+            const config = {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify({ user: "Feiyang Chen", id })
+            };
+            return fetch(url, config).then(response => response.json())
+                .then(json => {
+                    console.log("deleted excercise - " + JSON.stringify(json));
+                    dispatch(deleteExcercise(id));
+                })
+                .catch(() => {
+                    console.log("error updating excercise!");
+                });
+        }
+    };
+}
+
 export const DELETE_EXCERCISE = "DELETE_EXCERCISE";
-export function deleteExcercise(excercise_id) {
+export function deleteExcercise(id) {
     return {
         type: DELETE_EXCERCISE,
-        id: excercise_id
+        id: id
     };
 };
 
@@ -111,7 +138,7 @@ export function tryUpdateExcercise(excercise: ExcerciseModel) {
             return fetch(url, config).then(response => response.json())
                 .then(json => {
                     console.log("updated excercise - " + JSON.stringify(json));
-                        dispatch(updateExcercise(excercise));
+                    dispatch(updateExcercise(excercise));
                 })
                 .catch(() => {
                     console.log("error updating excercise!");

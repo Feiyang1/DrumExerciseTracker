@@ -13,7 +13,10 @@ export default (state: Models.DrumExcerciseStore, action: Models.Action) => {
             newState.excercises.push(action.excercise);
             return newState;
         case DELETE_EXCERCISE:
-            return;
+            newState.excercises = newState.excercises.filter((excercise) => {
+                return excercise.id !== action.id;
+            });
+            return newState;
         case COMPLETE_EXCERCISE:
             let newExcercises = newState.excercises.map((excercise) => {
                 if (excercise.id === action.excercise.id) {
