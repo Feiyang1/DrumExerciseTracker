@@ -122,7 +122,7 @@ export function completeExcerciseLocal(excercise_id) {
 
 export function tryUpdateExcercise(excercise: ExcerciseModel) {
     return function (dispatch) {
-        if (process.env.NODE_ENV !== "production") { // dev
+        if (process.env.NODE_ENV === "dev") { // dev
             dispatch(updateExcercise(excercise));
         }
         else {
