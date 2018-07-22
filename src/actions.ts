@@ -2,7 +2,21 @@ import * as fetch from "isomorphic-fetch";
 import { ExcerciseModel } from "./models";
 import { INewExcercise } from "./components/addExcerciseModal";
 
-export const TRY_ADD_EXCERCISE = "TRY_ADD_EXCERCISE";
+export const Actions = {
+    TRY_ADD_EXCERCISE: "TRY_ADD_EXCERCISE",
+    ADD_EXCERCISE: "ADD_EXCERCISE",
+    DELETE_EXCERCISE: "DELETE_EXCERCISE",
+    COMPLETE_EXCERCISE: "COMPLETE_EXCERCISE",
+    COMPLETE_EXCERCISE_LOCAL: "COMPLETE_EXCERCISE_LOCAL",
+    UPDATE_EXCERCISE: "UPDATE_EXCERCISE",
+    RECEIVE_EXCERCISES: "RECEIVE_EXCERCISES",
+    SET_VISIBILITYFILTER: "SET_VISIBILITYFILTER",
+    SHOW_DIALOG: "SHOW_DIALOG",
+    HIDE_DIALOG: "HIDE_DIALOG",
+    LOGGED_IN: "LOGGED_IN",
+    LOGGED_OUT: "LOGGED_OUT"
+};
+
 export function tryAddExcercise(excercise: INewExcercise) {
     return function (dispatch) {
         if (process.env.NODE_ENV === "dev") { // dev
@@ -34,10 +48,9 @@ export function tryAddExcercise(excercise: INewExcercise) {
     };
 }
 
-export const ADD_EXCERCISE = "ADD_EXCERCISE";
 export function addExcercise(excercise) {
     return {
-        type: ADD_EXCERCISE,
+        type: Actions.ADD_EXCERCISE,
         excercise
     };
 };
@@ -69,10 +82,9 @@ export function tryDeleteExcercise(id: string) {
     };
 }
 
-export const DELETE_EXCERCISE = "DELETE_EXCERCISE";
 export function deleteExcercise(id) {
     return {
-        type: DELETE_EXCERCISE,
+        type: Actions.DELETE_EXCERCISE,
         id: id
     };
 };
@@ -104,18 +116,16 @@ export function tryCompleteExcercise(excercise_id) {
     }
 };
 
-export const COMPLETE_EXCERCISE = "COMPLETE_EXCERCISE";
 export function completeExcercise(excercise) {
     return {
-        type: COMPLETE_EXCERCISE,
+        type: Actions.COMPLETE_EXCERCISE,
         excercise
     };
 }
 
-export const COMPLETE_EXCERCISE_LOCAL = "COMPLETE_EXCERCISE_LOCAL";
 export function completeExcerciseLocal(excercise_id) {
     return {
-        type: COMPLETE_EXCERCISE_LOCAL,
+        type: Actions.COMPLETE_EXCERCISE_LOCAL,
         id: excercise_id
     };
 }
@@ -147,18 +157,16 @@ export function tryUpdateExcercise(excercise: ExcerciseModel) {
     };
 }
 
-export const UPDATE_EXCERCISE = "UPDATE_EXCERCISE";
 export function updateExcercise(excercise: ExcerciseModel) {
     return {
-        type: UPDATE_EXCERCISE,
+        type: Actions.UPDATE_EXCERCISE,
         payload: excercise
     };
 }
 
-export const RECEIVE_EXCERCISES = "RECEIVE_EXCERCISES";
 export function receiveExcercises(json) {
     return {
-        type: RECEIVE_EXCERCISES,
+        type: Actions.RECEIVE_EXCERCISES,
         excercises: json
     }
 }
@@ -173,25 +181,24 @@ export function fetchExcercises() {
     };
 }
 
-export const SET_VISIBILITYFILTER = "SET_VISIBILITYFILTER";
 export function setVisibilityFilter(filter) {
     return {
-        type: SET_VISIBILITYFILTER,
+        type: Actions.SET_VISIBILITYFILTER,
         filter
     };
 }
 
-export const SHOW_DIALOG = "SHOW_DIALOG";
 export function showDialog(payload) {
     return {
-        type: SHOW_DIALOG,
+        type: Actions.SHOW_DIALOG,
         payload
     };
 }
 
-export const HIDE_DIALOG = "HIDE_DIALOG";
 export function hideDialog() {
     return {
-        type: HIDE_DIALOG
+        type: Actions.HIDE_DIALOG
     };
 }
+
+
