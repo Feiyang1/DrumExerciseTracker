@@ -1,6 +1,7 @@
 import * as fetch from "isomorphic-fetch";
-import { ExcerciseModel } from "./models";
+import { ExcerciseModel, Action, VoidAction } from "./models";
 import { INewExcercise } from "./components/addExcerciseModal";
+import { Filter } from "./models/filters";
 
 export const Actions = {
     TRY_ADD_EXCERCISE: "TRY_ADD_EXCERCISE",
@@ -48,10 +49,10 @@ export function tryAddExcercise(excercise: INewExcercise) {
     };
 }
 
-export function addExcercise(excercise) {
+export function addExcercise(payload): Action<ExcerciseModel> {
     return {
         type: Actions.ADD_EXCERCISE,
-        excercise
+        payload
     };
 };
 
@@ -82,10 +83,10 @@ export function tryDeleteExcercise(id: string) {
     };
 }
 
-export function deleteExcercise(id) {
+export function deleteExcercise(id): Action<string> {
     return {
         type: Actions.DELETE_EXCERCISE,
-        id: id
+        payload: id
     };
 };
 
@@ -116,17 +117,17 @@ export function tryCompleteExcercise(excercise_id) {
     }
 };
 
-export function completeExcercise(excercise) {
+export function completeExcercise(excercise): Action<ExcerciseModel> {
     return {
         type: Actions.COMPLETE_EXCERCISE,
-        excercise
+        payload: excercise
     };
 }
 
-export function completeExcerciseLocal(excercise_id) {
+export function completeExcerciseLocal(excercise_id): Action<string> {
     return {
         type: Actions.COMPLETE_EXCERCISE_LOCAL,
-        id: excercise_id
+        payload: excercise_id
     };
 }
 
@@ -157,18 +158,18 @@ export function tryUpdateExcercise(excercise: ExcerciseModel) {
     };
 }
 
-export function updateExcercise(excercise: ExcerciseModel) {
+export function updateExcercise(excercise: ExcerciseModel): Action<ExcerciseModel> {
     return {
         type: Actions.UPDATE_EXCERCISE,
         payload: excercise
     };
 }
 
-export function receiveExcercises(json) {
+export function receiveExcercises(json): Action<ExcerciseModel[]> {
     return {
         type: Actions.RECEIVE_EXCERCISES,
-        excercises: json
-    }
+        payload: json
+    };
 }
 
 export function fetchExcercises() {
@@ -181,10 +182,10 @@ export function fetchExcercises() {
     };
 }
 
-export function setVisibilityFilter(filter) {
+export function setVisibilityFilter(filter: Filter): Action<Filter> {
     return {
         type: Actions.SET_VISIBILITYFILTER,
-        filter
+        payload: filter
     };
 }
 
@@ -195,10 +196,20 @@ export function showDialog(payload) {
     };
 }
 
-export function hideDialog() {
+export function hideDialog(): VoidAction {
     return {
         type: Actions.HIDE_DIALOG
     };
 }
 
+export function loggedIn(): VoidAction {
+    return {
+        type: Actions.LOGGED_IN
+    };
+}
 
+export function loggedOut(): VoidAction {
+    return {
+        type: Actions.LOGGED_OUT
+    };
+}
