@@ -1,11 +1,22 @@
 import * as Models from "../models";
+import data from "../data";
 import {
     Actions
 } from "../actions";
 import { ExcerciseModel, Action } from "../models";
 import { Filter } from "../models/filters";
 
-export default (state: Models.DrumExcerciseStore, action: Action<any>) => {
+const initialState: Models.DrumExcerciseStore = {
+    excercises: data,
+    visibilityFilter: "today",
+    dialog: { component: null, props: null, show: false },
+    uiState: { showAddExcericeModal: false },
+    userState: {
+        loggedIn: false
+    }
+};
+
+export default (state: Models.DrumExcerciseStore = initialState, action: Action<any>) => {
     let newState = { ...state };
     switch (action.type) {
         case Actions.ADD_EXCERCISE:
@@ -63,6 +74,18 @@ export default (state: Models.DrumExcerciseStore, action: Action<any>) => {
             return newState;
         case Actions.HIDE_DIALOG:
             newState.dialog = { ...newState.dialog, show: false };
+            return newState;
+        case Actions.LOGGED_IN:
+            newState.userState = {
+                ...newState.userState,
+                loggedIn: true
+            }
+            return newState;
+        case Actions.LOGGED_OUT:
+            newState.userState = {
+                ...newState.userState,
+                loggedIn: false
+            };
             return newState;
         default:
             return state;

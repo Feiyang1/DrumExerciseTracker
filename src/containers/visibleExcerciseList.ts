@@ -1,9 +1,10 @@
 import { connect } from "react-redux"
 import ExcerciseList from "../components/excerciseList"
 import * as Models from "../models";
-import { tryCompleteExcercise, tryUpdateExcercise, tryDeleteExcercise, showDialog, hideDialog } from "../actions";
+import { showDialog, hideDialog } from "../actions";
 import EditExcerciseModal from "../components/editExcerciseModal";
 import DeleteExcerciseModal from "../components/deleteExcerciseModal";
+import { tryCompleteExcercise, tryUpdateExcercise, tryDeleteExcercise } from "../thunks";
 
 const getVisibleExcercises = (excercises: Models.ExcerciseModel[], visibilityFilter) => {
     let visibleExcercises = [];
@@ -58,7 +59,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onExcerciseClick: (visibilityFilter) => {
             return (id: string) => {
-                if(visibilityFilter === "today") {
+                if (visibilityFilter === "today") {
                     dispatch(tryCompleteExcercise(id));
                 }
             };

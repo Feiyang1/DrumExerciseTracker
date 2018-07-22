@@ -6,12 +6,11 @@ import thunkMiddleware from "redux-thunk";
 import logger from "redux-logger";
 import { AppContainer } from "react-hot-loader";
 
-import App from "./components/app";
-import { fetchExcercises } from "./actions";
+import App from "./containers/appContainer";
 import excerciseApp from "./reducers/excercises";
-import data from "./data";
 import * as Models from "./models";
 import * as firebase from 'firebase';
+import { fetchExcercises } from "./thunks";
 
 // Initialize Firebase
 const config = {
@@ -24,12 +23,7 @@ const config = {
 };
 firebase.initializeApp(config);
 
-let store = createStore<Models.DrumExcerciseStore>(excerciseApp, {
-    excercises: data,
-    visibilityFilter: "today",
-    dialog: { component: null, props: null, show: false },
-    uiState: { showAddExcericeModal: false }
-}, applyMiddleware(logger, thunkMiddleware));
+let store = createStore<Models.DrumExcerciseStore>(excerciseApp, undefined, applyMiddleware(logger, thunkMiddleware));
 store.dispatch(fetchExcercises()).then(() => {
     console.log("fetch success");
 });
@@ -45,8 +39,8 @@ ReactDOM.render(
 );
 
 if (module.hot) {
-    module.hot.accept("./components/app", () => {
-        const NextApp = require<RequireImport>("./components/app").default;
+    module.hot.accept("./containers/appContainer", () => {
+        const NextApp = require<RequireImport>("./containers/appContainer").default;
         ReactDOM.render(
             <AppContainer>
                 <Provider store={store}>

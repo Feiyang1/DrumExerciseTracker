@@ -1,8 +1,9 @@
 import { connect } from "react-redux";
 
 import AppBar from "../components/appBar";
-import { showDialog, hideDialog, tryAddExcercise } from "../actions";
+import { showDialog, hideDialog } from "../actions";
 import AddExcerciseModal, { INewExcercise } from "../components/addExcerciseModal";
+import { tryAddExcercise } from "../thunks";
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
