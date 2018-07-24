@@ -44,7 +44,7 @@
     "prestart": "tcm src",
     "start": "webpack-dev-server --config webpack.dev.js",
     "startserv": "node backend/server.js",
-    "webpack": "webpack --display-optimization-bailout --config webpack.prod.js",
+    "webpack": "webpack --config webpack.prod.js",
     "build": "npm run webpack"
   },
   "repository": {
