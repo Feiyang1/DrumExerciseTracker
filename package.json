@@ -45,6 +45,7 @@
     "start": "webpack-dev-server --config webpack.dev.js",
     "startserv": "node backend/server.js",
     "webpack": "webpack --config webpack.prod.js",
+    "prebuild": "tcm src",
     "build": "npm run webpack"
   },
   "repository": {
