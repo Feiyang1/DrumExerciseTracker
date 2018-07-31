@@ -1,8 +1,3 @@
-create table users (
-	id int primary key Identity(1,1),
-	name nvarchar(50) unique
-)
-
 create table excercises (
     id int NOT NULL Identity(1,1) primary key,
     name nvarchar(100) ,
@@ -10,7 +5,7 @@ create table excercises (
 	increment int,
     active bit,
     time_signature nvarchar(100),
-    user_id int foreign key references users(id)
+    user_id nvarchar(50)
 )
 
 create table history (
@@ -18,8 +13,6 @@ create table history (
     dt datetime,
     bpm int
 )
-
-insert into users (name) values ('Feiyang Chen')
 
 insert into excercises (name, bpm, user_id) values ('double stroke roll - full stroke', 62, 1)
 insert into excercises (name, bpm, user_id) values ('paradiddle', 43, 1)
