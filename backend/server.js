@@ -1,14 +1,28 @@
 "use strict"
 
-let express = require("express");
-let bodyParser = require("body-parser");
-let cors = require("cors");
-let fs = require("fs");
-let path = require("path");
-let app = express();
-let Connection = require('tedious').Connection;
-let Request = require('tedious').Request;
-let TYPES = require('tedious').TYPES;
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const path = require("path");
+const app = express();
+const Connection = require('tedious').Connection;
+const Request = require('tedious').Request;
+const TYPES = require('tedious').TYPES;
+const admin = require('firebase-admin');
+
+// admin.initializeApp({
+//     credential: admin.credential.cert({
+//         projectId: '<PROJECT_ID>',
+//         clientEmail: 'foo@<PROJECT_ID>.iam.gserviceaccount.com',
+//         privateKey: '-----BEGIN PRIVATE KEY-----\n<KEY>\n-----END PRIVATE KEY-----\n'
+//     }),
+//     databaseURL: 'https://<DATABASE_NAME>.firebaseio.com'
+// });
+const serviceAccount = require('./data/serviceAccountKey.json');
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+});
 
 //let dataFile = "backend/data/data.json";
 let SQLs = {
@@ -71,7 +85,10 @@ app.route('/api')
         // let today = new Date();
         // today.setHours(0, 0, 0, 0);
         let user = req.query.user;
-
+        const token = req.headers.token;
+        admin.auth().verifyIdToken(token).then(function (decodedToken) {
+            const uid = decodedToken.uid;
+        });
         let request = new Request(SQLs.GET_EXCERCISES, (err, rowCount, rows) => {
 
             if (err) {

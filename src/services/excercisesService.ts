@@ -1,13 +1,22 @@
 import { INewExcercise } from "../components/addExcerciseModal";
 import { ExcerciseModel } from "../models";
+import { AuthenticationManager } from "./authentication";
 
 class ExcercisesService {
     constructor() {
 
     }
-    fetchExcercises(): Promise<any> {
-        let url = "api?user=" + encodeURIComponent("Feiyang Chen");
-        return fetch(url).then(response => response.json());
+
+    async fetchExcercises(): Promise<any> {
+        const idToken = await AuthenticationManager.getIdToken();
+        const url = "api?user=" + encodeURIComponent("Feiyang Chen");
+        const config = {
+            method: "GET",
+            headers: {
+                token: idToken
+            }
+        };
+        return fetch(url, config).then(response => response.json());
     }
 
     addExcercies(excercise: INewExcercise): Promise<any> {
