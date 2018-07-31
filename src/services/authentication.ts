@@ -1,6 +1,7 @@
 import { Dispatch } from "../../node_modules/redux";
 import * as firebase from "firebase";
-import { loggedIn, loggedOut } from "../actions";
+import { loggedOut } from "../actions";
+import { beforeLoggedIn } from "../thunks";
 
 export const authConfiguration = {
     // Popup signin flow rather than redirect flow.
@@ -23,11 +24,15 @@ export class AuthenticationManager {
         this.startListening();
     }
 
+    static getIdToken(): Promise<any> {
+        return firebase.auth().currentUser.getIdToken();
+    }
+
     startListening(): void {
         this.unsubscribe = firebase.auth().onAuthStateChanged(
             (user) => {
                 if (user) {
-                    this.dispatch(loggedIn());
+                    this.dispatch(beforeLoggedIn());
                 } else {
                     console.log("signed out");
                     this.dispatch(loggedOut());
@@ -43,5 +48,4 @@ export class AuthenticationManager {
     logOut(): Promise<void> {
         return firebase.auth().signOut();
     }
-
 }

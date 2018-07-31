@@ -25,8 +25,6 @@ export function addExcercise(payload): Action<ExcerciseModel> {
     };
 };
 
-
-
 export function deleteExcercise(id): Action<string> {
     return {
         type: Actions.DELETE_EXCERCISE,

@@ -1,7 +1,7 @@
 import { AuthenticationManager } from "./services/authentication";
 import { INewExcercise } from "./components/addExcerciseModal";
 import { ExcerciseModel } from "./models";
-import { addExcercise, deleteExcercise, completeExcerciseLocal, completeExcercise, updateExcercise, receiveExcercises } from "./actions";
+import { addExcercise, deleteExcercise, completeExcerciseLocal, completeExcercise, updateExcercise, receiveExcercises, loggedIn } from "./actions";
 import excercisesService from "./services/excercisesService";
 
 let authenticationManager: AuthenticationManager;
@@ -115,4 +115,11 @@ export function fetchExcercises() {
         }
     };
 };
+
+export function beforeLoggedIn() {
+    return function (dispatch) {
+        dispatch(fetchExcercises());
+        dispatch(loggedIn());
+    };
+}
 

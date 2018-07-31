@@ -10,7 +10,6 @@ import App from "./containers/appContainer";
 import excerciseApp from "./reducers/excercises";
 import * as Models from "./models";
 import * as firebase from 'firebase';
-import { fetchExcercises } from "./thunks";
 
 // Initialize Firebase
 const config = {
@@ -24,9 +23,6 @@ const config = {
 firebase.initializeApp(config);
 
 let store = createStore<Models.DrumExcerciseStore>(excerciseApp, undefined, applyMiddleware(logger, thunkMiddleware));
-store.dispatch(fetchExcercises()).then(() => {
-    console.log("fetch success");
-});
 
 let rootEl = document.getElementById("app")
 ReactDOM.render(
