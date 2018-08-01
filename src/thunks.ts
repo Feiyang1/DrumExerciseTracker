@@ -106,9 +106,7 @@ export function tryUpdateExcercise(excercise: ExcerciseModel) {
 export function fetchExcercises() {
     return async function (dispatch) {
         try {
-            debugger;
             const response = await excercisesService.fetchExcercises();
-            debugger;
             dispatch(receiveExcercises(response ? response.excercises : null));
         } catch (e) {
             console.log("error getting excercise list!", e);

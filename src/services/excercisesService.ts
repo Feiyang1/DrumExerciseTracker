@@ -9,7 +9,7 @@ class ExcercisesService {
 
     async fetchExcercises(): Promise<any> {
         const idToken = await AuthenticationManager.getIdToken();
-        const url = "api?user=" + encodeURIComponent("Feiyang Chen");
+        const url = "api";
         const config = {
             method: "GET",
             headers: {
@@ -19,54 +19,62 @@ class ExcercisesService {
         return fetch(url, config).then(response => response.json());
     }
 
-    addExcercies(excercise: INewExcercise): Promise<any> {
+    async addExcercies(excercise: INewExcercise): Promise<any> {
+        const idToken = await AuthenticationManager.getIdToken();
         const url = "api";
         const headers = {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            token: idToken
         };
         const config = {
             method: "PUT",
             headers: headers,
-            body: JSON.stringify({ user: "Feiyang Chen", excercise })
+            body: JSON.stringify({ excercise })
         };
         return fetch(url, config).then(response => response.json());
     }
 
-    deleteExcercise(id: string): Promise<any> {
+    async deleteExcercise(id: string): Promise<any> {
+        const idToken = await AuthenticationManager.getIdToken();
         const url = "api/delete";
         const headers = {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            token: idToken
         };
         const config = {
             method: "POST",
             headers: headers,
-            body: JSON.stringify({ user: "Feiyang Chen", id })
+            body: JSON.stringify({ id })
         };
         return fetch(url, config).then(response => response.json());
     }
 
-    completeExcercise(id: string): Promise<any> {
+    async completeExcercise(id: string): Promise<any> {
+        const idToken = await AuthenticationManager.getIdToken();
         const url = "api/complete";
         const headers = {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            token: idToken
         };
         const config = {
             method: "POST",
             headers: headers,
-            body: JSON.stringify({ user: "Feiyang Chen", id, date: new Date() })
+            body: JSON.stringify({ id, date: new Date() })
         };
         return fetch(url, config).then((response) => response.json());
     }
 
-    updateExcercise(excercise: ExcerciseModel): Promise<any> {
+    async updateExcercise(excercise: ExcerciseModel): Promise<any> {
+        const idToken = await AuthenticationManager.getIdToken();
         const url = "api/update";
-        let headers = {
-            "Content-Type": "application/json"
+        const headers = {
+            "Content-Type": "application/json",
+            token: idToken
         };
-        let config = {
+        const config = {
             method: "POST",
             headers: headers,
-            body: JSON.stringify({ user: "Feiyang Chen", excercise })
+            body: JSON.stringify({ excercise })
         };
         return fetch(url, config).then(response => response.json());
     }

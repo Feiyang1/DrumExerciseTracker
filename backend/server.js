@@ -10,14 +10,6 @@ const Request = require('tedious').Request;
 const TYPES = require('tedious').TYPES;
 const admin = require('firebase-admin');
 
-// admin.initializeApp({
-//     credential: admin.credential.cert({
-//         projectId: '<PROJECT_ID>',
-//         clientEmail: 'foo@<PROJECT_ID>.iam.gserviceaccount.com',
-//         privateKey: '-----BEGIN PRIVATE KEY-----\n<KEY>\n-----END PRIVATE KEY-----\n'
-//     }),
-//     databaseURL: 'https://<DATABASE_NAME>.firebaseio.com'
-// });
 const serviceAccount = require('./data/serviceAccountKey.json');
 
 admin.initializeApp({
@@ -84,18 +76,16 @@ app.route('/api')
         // only care about date
         // let today = new Date();
         // today.setHours(0, 0, 0, 0);
-        let user = req.query.user;
         const token = req.headers.token;
         admin.auth().verifyIdToken(token).then(function (decodedToken) {
             const uid = decodedToken.uid;
-        });
-        let request = new Request(SQLs.GET_EXCERCISES, (err, rowCount, rows) => {
+            const request = new Request(SQLs.GET_EXCERCISES, (err, rowCount, rows) => {
 
             if (err) {
                 console.log("err : " + JSON.stringify(err));
                 return;
             }
-            let response = {
+                const response = {
                 excercises: processRows(rows),
                 //      today: today
             };
@@ -105,16 +95,19 @@ app.route('/api')
         });
 
         console.log(req.params);
-        request.addParameter("user", TYPES.VarChar, user);
+            request.addParameter("user", TYPES.VarChar, uid);
 
         executeStatement(request, true);
+        });
 
     }).post(function (req, res) {
     }).put(function (req, res) {// add a new excercise
-        let excercise = req.body.excercise;
-        let user = req.body.user;
+        const excercise = req.body.excercise;
 
-        let request = new Request(SQLs.ADD_EXCERCISE, (err, rowCount, rows) => {
+        const token = req.headers.token;
+        admin.auth().verifyIdToken(token).then(function (decodedToken) {
+            const uid = decodedToken.uid;
+            const request = new Request(SQLs.ADD_EXCERCISE, (err, rowCount, rows) => {
             if (err) {
                 console.log("err : " + JSON.stringify(err));
                 return;
@@ -133,19 +126,22 @@ app.route('/api')
         request.addParameter("excerciseTimeSignature", TYPES.VarChar, excercise.time_signature);
         request.addParameter("excerciseActive", TYPES.Bit, 1);
         request.addParameter("increment", TYPES.Int, excercise.increment);
-        request.addParameter("user", TYPES.VarChar, user);
+            request.addParameter("user", TYPES.VarChar, uid);
 
         executeStatement(request, true);
+    });
     });
 
 app.route('/api/complete')//complete an excercise
     .post((req, res) => {
-        let user = req.body.user;
-        let excerciseId = req.body.id;
-        let date = new Date(req.body.date);
+        const excerciseId = req.body.id;
+        const date = new Date(req.body.date);
 
+        const token = req.headers.token;
+        admin.auth().verifyIdToken(token).then(function (decodedToken) {
+            const uid = decodedToken.uid;
         // update excercises
-        let request = new Request(SQLs.EXCERCISE_INCREMENT, (err, rowCount, rows) => {
+            const request = new Request(SQLs.EXCERCISE_INCREMENT, (err, rowCount, rows) => {
             if (err) {
                 console.log("err : " + JSON.stringify(err));
                 return;
@@ -159,22 +155,24 @@ app.route('/api/complete')//complete an excercise
             res.send(JSON.stringify(response));
         });
 
-        console.log("user: " + user + "; excerciseId: " + excerciseId + "; date: " + date);
+            console.log("user: " + uid + "; excerciseId: " + excerciseId + "; date: " + date);
 
         request.addParameter("excerciseId", TYPES.Int, excerciseId);
-        request.addParameter("user", TYPES.VarChar, user);
+            request.addParameter("user", TYPES.VarChar, uid);
         request.addParameter("date", TYPES.DateTime, date);
 
         executeStatement(request, true);
     });
+    });
 
 app.route('/api/update')// update an excercise
     .post((req, res) => {
-        let user = req.body.user;
-        let excercise = req.body.excercise;
-
+        const excercise = req.body.excercise;
+        const token = req.headers.token;
+        admin.auth().verifyIdToken(token).then(function (decodedToken) {
+            const uid = decodedToken.uid;
         // update excercises
-        let request = new Request(SQLs.EXCERCISE_UPDATE, (err, rowCount, rows) => {
+            const request = new Request(SQLs.EXCERCISE_UPDATE, (err, rowCount, rows) => {
             if (err) {
                 console.log("err : " + JSON.stringify(err));
                 return;
@@ -184,25 +182,29 @@ app.route('/api/update')// update an excercise
             res.send({ msg: "success!" });
         });
 
-        console.log("user: " + user + "; excercise: " + excercise);
+            console.log("user: " + uid + "; excercise: " + excercise);
 
         request.addParameter("excerciseId", TYPES.Int, excercise.id);
         request.addParameter("excerciseName", TYPES.VarChar, excercise.name);
         request.addParameter("excerciseBpm", TYPES.Int, excercise.bpm);
         request.addParameter("excerciseTimeSignature", TYPES.VarChar, excercise.time_signature);
-        request.addParameter("user", TYPES.VarChar, user);
+            request.addParameter("user", TYPES.VarChar, uid);
         request.addParameter("excerciseActive", TYPES.Bit, 1);
         request.addParameter("increment", TYPES.Int, excercise.increment);
 
         executeStatement(request, true);
     });
+    });
 app.route('/api/delete') // delete an excercise
     .post((req, res) => {
-        let user = req.body.user;
-        let excerciseId = req.body.id;
+        const user = req.body.user;
+        const excerciseId = req.body.id;
 
+        const token = req.headers.token;
+        admin.auth().verifyIdToken(token).then(function (decodedToken) {
+            const uid = decodedToken.uid;
         // update excercises
-        let request = new Request(SQLs.DELETE_EXCERCISE, (err, rowCount, rows) => {
+            const request = new Request(SQLs.DELETE_EXCERCISE, (err, rowCount, rows) => {
             if (err) {
                 console.log("err : " + JSON.stringify(err));
                 res.status(400);
@@ -214,12 +216,13 @@ app.route('/api/delete') // delete an excercise
             res.send({ msg: "success!" });
         });
 
-        console.log("deleting! user: " + user + "; excercise id: " + excerciseId);
+            console.log("deleting! user: " + uid + "; excercise id: " + excerciseId);
 
         request.addParameter("excerciseId", TYPES.Int, excerciseId);
-        request.addParameter("user", TYPES.VarChar, user);
+            request.addParameter("user", TYPES.VarChar, uid);
 
         executeStatement(request, true);
+    });
     });
 
 function processRows(rows) {
