@@ -28,6 +28,10 @@ export class AuthenticationManager {
         return firebase.auth().currentUser.getIdToken();
     }
 
+    static getUid(): string | null {
+        return firebase.auth().currentUser.uid;
+    }
+
     startListening(): void {
         this.unsubscribe = firebase.auth().onAuthStateChanged(
             (user) => {

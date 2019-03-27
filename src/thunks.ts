@@ -3,6 +3,7 @@ import { INewExcercise } from "./components/addExcerciseModal";
 import { ExcerciseModel } from "./models";
 import { addExcercise, deleteExcercise, completeExcerciseLocal, completeExcercise, updateExcercise, receiveExcercises, loggedIn } from "./actions";
 import excercisesService from "./services/excercisesService";
+import * as firebase from 'firebase';
 
 let authenticationManager: AuthenticationManager;
 
@@ -106,8 +107,16 @@ export function tryUpdateExcercise(excercise: ExcerciseModel) {
 export function fetchExcercises() {
     return async function (dispatch) {
         try {
-            const response = await excercisesService.fetchExcercises();
-            dispatch(receiveExcercises(response ? response.excercises : null));
+            const excercises: ExcerciseModel[] = [];
+            const snapshots = await firebase.firestore().collection('excercises').where('user_id', '==', AuthenticationManager.getUid()).get();
+            snapshots.forEach((doc) => {
+                excercises.push(ExcerciseModel.fromJSON({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+            });
+
+            dispatch(receiveExcercises(excercises));
         } catch (e) {
             console.log("error getting excercise list!", e);
         }
