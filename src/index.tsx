@@ -9,18 +9,9 @@ import { AppContainer } from "react-hot-loader";
 import App from "./containers/appContainer";
 import excerciseApp from "./reducers/excercises";
 import * as Models from "./models";
-import * as firebase from 'firebase';
+import { initializeFirebase } from "./services/firebaseService";
 
-// Initialize Firebase
-const config = {
-    apiKey: "AIzaSyB-39dPhBmprjGMhREEaKubQ9RSR0yF2SQ",
-    authDomain: "meealwaysawesome.firebaseapp.com",
-    databaseURL: "https://meealwaysawesome.firebaseio.com",
-    projectId: "meealwaysawesome",
-    storageBucket: "meealwaysawesome.appspot.com",
-    messagingSenderId: "190884510771"
-};
-firebase.initializeApp(config);
+initializeFirebase();
 
 let store = createStore<Models.DrumExcerciseStore>(excerciseApp, undefined, applyMiddleware(logger, thunkMiddleware));
 

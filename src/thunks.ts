@@ -3,7 +3,7 @@ import { INewExcercise } from "./components/addExcerciseModal";
 import { ExcerciseModel } from "./models";
 import { addExcercise, deleteExcercise, completeExcerciseLocal, completeExcercise, updateExcercise, receiveExcercises, loggedIn } from "./actions";
 import excercisesService from "./services/excercisesService";
-import * as firebase from 'firebase';
+import { getFirebaseNamespace } from "./services/firebaseService";
 
 let authenticationManager: AuthenticationManager;
 
@@ -108,6 +108,7 @@ export function fetchExcercises() {
     return async function (dispatch) {
         try {
             const excercises: ExcerciseModel[] = [];
+            const firebase = getFirebaseNamespace();
             const snapshots = await firebase.firestore().collection('excercises').where('user_id', '==', AuthenticationManager.getUid()).get();
             snapshots.forEach((doc) => {
                 excercises.push(ExcerciseModel.fromJSON({

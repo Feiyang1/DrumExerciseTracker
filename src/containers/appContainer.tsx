@@ -8,8 +8,8 @@ import Dialog from "./dialogContainer";
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { DrumExcerciseStore } from "../models";
 import { authConfiguration } from "../services/authentication";
-import * as firebase from "firebase";
 import { appStart, appEnd, tryLogOut } from "../thunks";
+import { getFirebaseNamespace } from "../services/firebaseService";
 
 interface AppProps {
 
@@ -44,7 +44,7 @@ class App extends React.Component<AppProps> {
                         <VisibleExcerciseList />
                         <Dialog />
                     </div> :
-                    <StyledFirebaseAuth uiConfig={authConfiguration} firebaseAuth={firebase.auth()} />
+                    <StyledFirebaseAuth uiConfig={authConfiguration} firebaseAuth={getFirebaseNamespace().auth()} />
             }
         </div>
     }

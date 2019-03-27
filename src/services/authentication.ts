@@ -1,7 +1,9 @@
 import { Dispatch } from "../../node_modules/redux";
-import * as firebase from "firebase";
 import { loggedOut } from "../actions";
 import { beforeLoggedIn } from "../thunks";
+import { getFirebaseNamespace } from "./firebaseService";
+
+const firebase = getFirebaseNamespace();
 
 export const authConfiguration = {
     // Popup signin flow rather than redirect flow.
