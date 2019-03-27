@@ -3,7 +3,6 @@ import { INewExcercise } from "./components/addExcerciseModal";
 import { ExcerciseModel } from "./models";
 import { addExcercise, deleteExcercise, completeExcerciseLocal, completeExcercise, updateExcercise, receiveExcercises, loggedIn } from "./actions";
 import excercisesService from "./services/excercisesService";
-import { getFirebaseNamespace } from "./services/firebaseService";
 
 let authenticationManager: AuthenticationManager;
 
@@ -71,15 +70,15 @@ export function tryDeleteExcercise(id: string) {
     };
 }
 
-export function tryCompleteExcercise(excercise_id) {
+export function tryCompleteExcercise(excercise: ExcerciseModel) {
     return async function (dispatch) {
-        if (process.env.NODE_ENV === "dev") { // dev
-            dispatch(completeExcerciseLocal(excercise_id));
+        if (process.env.NODE_ENV === "prod") { // dev
+            dispatch(completeExcerciseLocal(excercise.id));
         }
         else { // prod
             try {
-                const response = await excercisesService.completeExcercise(excercise_id);
-                dispatch(completeExcercise(response && response.excercises && response.excercises[0]));
+                const response = await excercisesService.completeExcercise(excercise);
+                dispatch(completeExcercise(response));
             } catch (e) {
                 console.log("error completing excercise!", e);
             };
@@ -107,16 +106,7 @@ export function tryUpdateExcercise(excercise: ExcerciseModel) {
 export function fetchExcercises() {
     return async function (dispatch) {
         try {
-            const excercises: ExcerciseModel[] = [];
-            const firebase = getFirebaseNamespace();
-            const snapshots = await firebase.firestore().collection('excercises').where('user_id', '==', AuthenticationManager.getUid()).get();
-            snapshots.forEach((doc) => {
-                excercises.push(ExcerciseModel.fromJSON({
-                    id: doc.id,
-                    ...doc.data()
-                }));
-            });
-
+            const excercises: ExcerciseModel[] = await excercisesService.fetchExcercises();
             dispatch(receiveExcercises(excercises));
         } catch (e) {
             console.log("error getting excercise list!", e);

@@ -5,6 +5,7 @@ import { showDialog, hideDialog } from "../actions";
 import EditExcerciseModal from "../components/editExcerciseModal";
 import DeleteExcerciseModal from "../components/deleteExcerciseModal";
 import { tryCompleteExcercise, tryUpdateExcercise, tryDeleteExcercise } from "../thunks";
+import { ExcerciseModel } from "../models";
 
 const getVisibleExcercises = (excercises: Models.ExcerciseModel[], visibilityFilter) => {
     let visibleExcercises = [];
@@ -58,9 +59,9 @@ const mapStateToProps = (state: Models.DrumExcerciseStore) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onExcerciseClick: (visibilityFilter) => {
-            return (id: string) => {
+            return (excercise: ExcerciseModel) => {
                 if (visibilityFilter === "today") {
-                    dispatch(tryCompleteExcercise(id));
+                    dispatch(tryCompleteExcercise(excercise));
                 }
             };
         },

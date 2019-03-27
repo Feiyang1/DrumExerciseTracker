@@ -39,7 +39,7 @@ class Excercise extends React.Component<IExcerciseProps, IExcerciseState> {
             <div className={styles.excerciseContainer}>
                 <Swipeable className={`${styles.contentContainer} ${this.state.animation ? styles.contentContainerAnimation : null}`} style={{ width: this.state.contentWidth, touchAction: 'none' }} onSwipedLeft={this.onSwipedLeft.bind(this)} onSwipedRight={this.onSwipedRight.bind(this)}
                     onSwiping={this.onSwiping.bind(this)} preventDefaultTouchmoveEvent >
-                    <RippleCard style={{ position: "relative" }} onClick={() => this.props.onClick(this.props.model.id)}>
+                    <RippleCard style={{ position: "relative" }} onClick={() => this.props.onClick(this.props.model)}>
                         <CardTitle title={this.props.model.name} />
                         <CardText>
                             <div>time signature: {this.props.model.time_signature}</div>

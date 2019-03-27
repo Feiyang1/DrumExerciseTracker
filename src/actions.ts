@@ -39,7 +39,7 @@ export function completeExcercise(excercise): Action<ExcerciseModel> {
     };
 }
 
-export function completeExcerciseLocal(excercise_id): Action<string> {
+export function completeExcerciseLocal(excercise_id: string): Action<string> {
     return {
         type: Actions.COMPLETE_EXCERCISE_LOCAL,
         payload: excercise_id

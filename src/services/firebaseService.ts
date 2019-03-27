@@ -19,3 +19,7 @@ export function initializeFirebase() {
 export function getFirebaseNamespace() {
     return firebase;
 }
+
+export function getFirestoreInstance() {
+    return firebase.firestore();
+}
