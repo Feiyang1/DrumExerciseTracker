@@ -18,7 +18,7 @@ export const Actions = {
     TRY_LOG_OUT: "TRY_LOG_OUT"
 };
 
-export function addExcercise(payload): Action<ExcerciseModel> {
+export function addExcercise(payload: ExcerciseModel): Action<ExcerciseModel> {
     return {
         type: Actions.ADD_EXCERCISE,
         payload

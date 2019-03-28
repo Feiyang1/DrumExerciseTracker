@@ -33,18 +33,17 @@ export function tryLogOut() {
 
 export function tryAddExcercise(excercise: INewExcercise) {
     return async function (dispatch) {
-        if (process.env.NODE_ENV === "dev") { // dev
+        if (process.env.NODE_ENV === "prod") { // dev
             const newExcercise = new ExcerciseModel("" + new Date().getTime(), excercise.name, excercise.bpm, excercise.time_signature, excercise.increment, [], true);
             dispatch(addExcercise(newExcercise));
         }
         else { // save it to database
             try {
-                const response = await excercisesService.addExcercies(excercise);
+                const addedExcercise = await excercisesService.addExcercies(excercise);
 
-                console.log("added excercise - " + JSON.stringify(response));
-                const newExcercise = response ? response.excercise : undefined;
-                if (newExcercise) {
-                    dispatch(addExcercise(newExcercise));
+                console.log("added excercise - " + JSON.stringify(addedExcercise));
+                if (addedExcercise) {
+                    dispatch(addExcercise(addedExcercise));
                 }
             } catch (e) {
                 console.log("error adding excercise! ", e);
