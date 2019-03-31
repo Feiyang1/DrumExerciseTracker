@@ -54,13 +54,13 @@ export function tryAddExcercise(excercise: INewExcercise) {
 
 export function tryDeleteExcercise(id: string) {
     return async function (dispatch) {
-        if (process.env.NODE_ENV === "dev") { // dev
+        if (process.env.NODE_ENV === "prod") { // dev
             dispatch(deleteExcercise(id));
         }
         else {
             try {
-                const response = await excercisesService.deleteExcercise(id);
-                console.log("deleted excercise - " + JSON.stringify(response));
+                await excercisesService.deleteExcercise(id);
+                console.log("deleted excercise - " + id);
                 dispatch(deleteExcercise(id));
             } catch (e) {
                 console.log("error deleting excercise!", e);

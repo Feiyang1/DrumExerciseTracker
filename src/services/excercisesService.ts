@@ -39,19 +39,9 @@ class ExcercisesService {
         return addedExcercise;
     }
 
-    async deleteExcercise(id: string): Promise<any> {
-        const idToken = await AuthenticationManager.getIdToken();
-        const url = "api/delete";
-        const headers = {
-            "Content-Type": "application/json",
-            token: idToken
-        };
-        const config = {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify({ id })
-        };
-        return fetch(url, config).then(response => response.json());
+    deleteExcercise(id: string): Promise<void> {
+        const firestore = getFirestoreInstance();
+        return firestore.collection(EXCERCISE_COLLECTION).doc(id).delete();
     }
 
     async completeExcercise(excercise: ExcerciseModel): Promise<ExcerciseModel> {
