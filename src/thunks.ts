@@ -33,7 +33,7 @@ export function tryLogOut() {
 
 export function tryAddExcercise(excercise: INewExcercise) {
     return async function (dispatch) {
-        if (process.env.NODE_ENV === "prod") { // dev
+        if (process.env.NODE_ENV === "dev") { // dev
             const newExcercise = new ExcerciseModel("" + new Date().getTime(), excercise.name, excercise.bpm, excercise.time_signature, excercise.increment, [], true);
             dispatch(addExcercise(newExcercise));
         }
@@ -54,7 +54,7 @@ export function tryAddExcercise(excercise: INewExcercise) {
 
 export function tryDeleteExcercise(id: string) {
     return async function (dispatch) {
-        if (process.env.NODE_ENV === "prod") { // dev
+        if (process.env.NODE_ENV === "dev") { // dev
             dispatch(deleteExcercise(id));
         }
         else {
@@ -71,7 +71,7 @@ export function tryDeleteExcercise(id: string) {
 
 export function tryCompleteExcercise(excercise: ExcerciseModel) {
     return async function (dispatch) {
-        if (process.env.NODE_ENV === "prod") { // dev
+        if (process.env.NODE_ENV === "dev") { // dev
             dispatch(completeExcerciseLocal(excercise.id));
         }
         else { // prod
@@ -87,7 +87,7 @@ export function tryCompleteExcercise(excercise: ExcerciseModel) {
 
 export function tryUpdateExcercise(excercise: ExcerciseModel) {
     return async function (dispatch) {
-        if (process.env.NODE_ENV === "prod") { // dev
+        if (process.env.NODE_ENV === "dev") { // dev
             dispatch(updateExcercise(excercise));
         }
         else {
