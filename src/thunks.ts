@@ -87,14 +87,14 @@ export function tryCompleteExcercise(excercise: ExcerciseModel) {
 
 export function tryUpdateExcercise(excercise: ExcerciseModel) {
     return async function (dispatch) {
-        if (process.env.NODE_ENV === "dev") { // dev
+        if (process.env.NODE_ENV === "prod") { // dev
             dispatch(updateExcercise(excercise));
         }
         else {
             try {
-                const response = await excercisesService.updateExcercise(excercise);
-                console.log("updated excercise - " + JSON.stringify(response));
-                dispatch(updateExcercise(excercise));
+                const updatedExcercise = await excercisesService.updateExcercise(excercise);
+                console.log("updated excercise - " + JSON.stringify(updatedExcercise));
+                dispatch(updateExcercise(updatedExcercise));
             } catch (e) {
                 console.log("error updating excercise!", e);
             };

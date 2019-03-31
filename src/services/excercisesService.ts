@@ -69,18 +69,25 @@ class ExcercisesService {
     }
 
     async updateExcercise(excercise: ExcerciseModel): Promise<any> {
-        const idToken = await AuthenticationManager.getIdToken();
-        const url = "api/update";
-        const headers = {
-            "Content-Type": "application/json",
-            token: idToken
-        };
-        const config = {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify({ excercise })
-        };
-        return fetch(url, config).then(response => response.json());
+        const firestore = getFirestoreInstance();
+        const docRef = firestore.collection(EXCERCISE_COLLECTION).doc(excercise.id);
+        const {
+            name,
+            time_signature,
+            bpm,
+            increment,
+            active
+        } = excercise;
+
+        await docRef.update({
+            name,
+            time_signature,
+            bpm,
+            increment,
+            active
+        });
+
+        return excercise;
     }
 }
 
