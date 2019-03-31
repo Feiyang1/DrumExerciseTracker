@@ -9,7 +9,7 @@ export class ExcerciseModel {
         public active: boolean) { }
 
     static fromJSON(object: any): ExcerciseModel {
-        if (!object.id || !object.name || !object.time_signature || !object.bpm || !object.increment || !object.active) {
+        if (!object.id || !object.name || !object.bpm) {
             throw Error(`Object does not have required fields - ${JSON.stringify(object)}`);
         }
 

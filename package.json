@@ -39,7 +39,7 @@
     "source-map-loader": "^0.1.5",
     "style-loader": "^0.13.1",
     "typed-css-modules": "^0.2.0",
-    "typescript": "^2.2.2",
+    "typescript": "^3.3.0",
     "webpack": "^3.5.5",
     "webpack-dev-server": "^2.3.0",
     "webpack-merge": "^4.1.0"
