@@ -52,7 +52,7 @@ class ExcercisesService {
         const nextBpm = excercise.bpm + excercise.increment;
         const currentDT = new Date();
         await docRef.update({
-            bpm: nextBpm,
+            bpm: firebase.firestore.FieldValue.increment(excercise.increment),
             history: firebase.firestore.FieldValue.arrayUnion({
                 // ServerTimestamp is currently not supported within an array - https://github.com/firebase/firebase-ios-sdk/issues/1164#issuecomment-384323764
                 date: currentDT,
