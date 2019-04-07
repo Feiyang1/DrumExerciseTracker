@@ -1,0 +1,13 @@
+{
+    "short_name": "DrumPad",
+    "name": "Drum Excercise Tracker",
+    "icons": [
+        {
+            "src": "/images/logo.png",
+            "type": "image/png",
+            "sizes": "572x645"
+        }
+    ],
+    "start_url": "/",
+    "display": "standalone"
+}

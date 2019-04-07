@@ -56,7 +56,7 @@ const frontend = {
         new HtmlWebpackPlugin({
             template: './index.html'
         }),
-        new CopyPlugin(['sw.js'])
+        new CopyPlugin(['sw.js', 'manifest.json', 'images/**'])
     ],
 
     // When importing a module whose path matches one of the following, just
