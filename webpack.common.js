@@ -1,5 +1,6 @@
-var webpack = require("webpack");
-var path = require("path");
+const path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
 
 const frontend = {
     entry: [
@@ -8,8 +9,7 @@ const frontend = {
     ],
     output: {
         path: path.join(__dirname, "dist"),
-        filename: "bundle.js",
-        publicPath: "/dist/"
+        filename: "bundle.js"
     },
 
     // Enable sourcemaps for debugging webpack's output.
@@ -21,7 +21,7 @@ const frontend = {
     },
 
     module: {
-        loaders: [
+        rules: [
             // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
             {
                 test: /\.tsx?$/,
@@ -52,7 +52,9 @@ const frontend = {
     },
 
     plugins: [
-        new webpack.optimize.ModuleConcatenationPlugin()
+        new HtmlWebpackPlugin({
+            template: './index.html'
+        })
     ],
 
     // When importing a module whose path matches one of the following, just
@@ -60,8 +62,19 @@ const frontend = {
     // This is important because it allows us to avoid bundling all of our
     // dependencies, which allows browsers to cache those libraries between builds.
     externals: {
-        "react": "React",
-        "react-dom": "ReactDOM"
+        // "react": "React",
+        // "react-dom": "ReactDOM"
+    },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    filename: 'vendors.js',
+                    chunks: 'all'
+                }
+            }
+        }
     }
 };
 

@@ -4,7 +4,8 @@ const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
     // Enable sourcemaps for debugging webpack's output.
-    devtool: "inline-source-map",
+    devtool: "source-map",
+    mode: 'development',
     plugins: [
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
@@ -15,13 +16,7 @@ module.exports = merge(common, {
         })
     ],
     devServer: {
-        contentBase: "./",
-        proxy: {
-            "/api": {
-                target: "http://localhost:3030",
-                secure: false
-            }
-        },
+        contentBase: "./dist",
         hot: true
     }
 })
