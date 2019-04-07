@@ -2,17 +2,22 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="Polymer Starter Kit">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-    <title>Drum Pad</title>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Polymer Starter Kit">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>Drum Pad</title>
+  <script>
+    // register service worker
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.register('sw.js')
+    }
+  </script>
 </head>
 
 <body>
-    <div id="app"></div>
+  <div id="app"></div>
 </body>
 
 </html>

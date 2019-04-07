@@ -1,5 +1,6 @@
 const path = require("path");
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 
 const frontend = {
@@ -54,7 +55,8 @@ const frontend = {
     plugins: [
         new HtmlWebpackPlugin({
             template: './index.html'
-        })
+        }),
+        new CopyPlugin(['sw.js'])
     ],
 
     // When importing a module whose path matches one of the following, just
