@@ -41,6 +41,7 @@ const frontend = {
                         options: {
                             modules: true,
                             sourceMap: true,
+                            context: __dirname,
                             importLoaders: 1,
                             localIdentName: "[name]--[local]--[hash:base64:8]"
                         }
