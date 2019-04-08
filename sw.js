@@ -1,7 +1,8 @@
 console.log('Hello SW123!');
+const cacheName = 'cache';
 self.addEventListener('install', function (e) {
 
-    e.waitUntil(caches.open('assets').then(function (cache) {
+    e.waitUntil(caches.open(cacheName).then(function (cache) {
         return cache.addAll([
             '/',
             '/index.html',
@@ -13,21 +14,31 @@ self.addEventListener('install', function (e) {
 
 self.addEventListener('fetch', function (event) {
     // let go non GET requests
-    if(event.request.method !== 'GET' || event.request.url.startsWith('chrome-extension://')) {
+    if (event.request.method !== 'GET' || event.request.url.startsWith('chrome-extension://')) {
         return;
     }
 
     event.respondWith(
         caches.match(event.request).then(function (response) {
             if (response) {
+                event.waitUntil(update(event.request));
                 return response;
             }
 
             return fetch(event.request).then(function (response) {
-                return caches.open('dynamic').then(function (cache) {
+                return caches.open(cacheName).then(function (cache) {
                     cache.put(event.request, response.clone());
                     return response;
                 });
             });
-        }))
+        }));
 })
+
+
+function update(request) {
+    return caches.open(cacheName).then(function (cache) {
+        return fetch(request).then(function (response) {
+            return cache.put(request, response);
+        });
+    });
+} 
