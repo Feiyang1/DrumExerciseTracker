@@ -6,6 +6,7 @@ import EditExcerciseModal from "../components/editExcerciseModal";
 import DeleteExcerciseModal from "../components/deleteExcerciseModal";
 import { tryCompleteExcercise, tryUpdateExcercise, tryDeleteExcercise } from "../thunks";
 import { ExcerciseModel } from "../models";
+import { getFirebaseNamespace } from "../services/firebaseService";
 
 const getVisibleExcercises = (excercises: Models.ExcerciseModel[], visibilityFilter) => {
     let visibleExcercises = [];
@@ -17,8 +18,16 @@ const getVisibleExcercises = (excercises: Models.ExcerciseModel[], visibilityFil
                     let today = new Date();// todo - today to be sent from server;
                     let lastRecord = excercise.history[excercise.history.length - 1]
                     let lastDate = lastRecord ? lastRecord.date : "";
+                    let lastDateJs = null;
 
-                    if (lastDate === "" || !isSameDate(new Date(lastDate), today)) {// if the excercise has not been practiced today. {
+                    const firebase = getFirebaseNamespace();
+                    if (lastDate instanceof firebase.firestore.Timestamp) {
+                        lastDateJs = lastDate.toDate();
+                    } else { // legacy dates are in string format
+                        lastDateJs = new Date(lastDate)
+                    }
+
+                    if (lastDate === "" || !isSameDate(lastDateJs, today)) {// if the excercise has not been practiced today. {
                         visibleExcercises.push(excercise);
                     }
                 }
